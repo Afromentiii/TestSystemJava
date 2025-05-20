@@ -1,9 +1,9 @@
 # W jaki sposób piszemy zmienne i funkcje.
-Używamy CamelCase
+Używamy CamelCase.
 
 # Bibloteki.
-JavaFX
-Tui
+JavaFX,
+Tui.
 
 # Must have.
 Web Panel | Konsola, 
