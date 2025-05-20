@@ -6,11 +6,11 @@ JavaFX
 Tui
 
 # Must have.
-Web Panel | Konsola 
-Baza danych 
-RMI
+Web Panel | Konsola, 
+Baza danych, 
+RMI.
 
 # Server.
-Baza danych
-Prosty webpanel
+Baza danych,
+Prosty webpanel.
 
