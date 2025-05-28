@@ -1,6 +1,7 @@
 package Client;
 
 import Service.InterfaceRMI;
+import Service.Test;
 import Service.User;
 
 import java.rmi.registry.LocateRegistry;
@@ -25,14 +26,18 @@ public class ClientMain
             }
 
             System.out.println(serviceClient.login("TestUser", "Test"));
+            Test test = serviceClient.createTest(1);
+            test.startTest();
+            System.out.println(serviceClient.receiveTestScore(test));
 
             if(serviceClient.logout(client.getUser()))
             {
                 client.setUser(null);
             }
-            Thread.sleep(5000);
 
             System.out.println("Client " + client.getUser());
+
+            Thread.sleep(5000);
         }
         catch (Exception e)
         {

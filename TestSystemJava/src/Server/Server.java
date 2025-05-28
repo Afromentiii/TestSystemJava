@@ -1,11 +1,18 @@
 package Server;
 
 import Service.InterfaceRMI;
+import Service.Question;
+import Service.Test;
 import Service.User;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Server extends UnicastRemoteObject implements InterfaceRMI
@@ -13,6 +20,10 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
     private final String header;
     private final Map<String, User> usersMap;
     private final Console serverConsole;
+    private final int notFound = -1;
+    private final String questionsMainFilePath;
+    private static int testID;
+    private final List<Test> testList;
 
     private boolean userExists(String username) throws RemoteException
     {
@@ -25,10 +36,33 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
         usersMap = new HashMap<String, User>();
         serverConsole = new Console();
         header = "[SERVER]";
+        questionsMainFilePath = "src/pytania.txt";
+        testID = 0;
+        testList = new ArrayList<Test>();
+    }
+
+    private int countLines()
+    {
+        try (BufferedReader br = new BufferedReader(new FileReader(questionsMainFilePath)))
+        {
+            String line;
+            int lineNumber = 0;
+
+            while ((line = br.readLine()) != null)
+            {
+                lineNumber++;
+            }
+            return lineNumber;
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return notFound;
     }
 
     @Override
-    public String register(String username, String password, String email, String firstName, String surname) throws RemoteException
+    public synchronized String register(String username, String password, String email, String firstName, String surname) throws RemoteException
     {
         if(userExists(username))
         {
@@ -43,7 +77,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
     }
 
     @Override
-    public User login(String username, String password) throws RemoteException
+    public synchronized User login(String username, String password) throws RemoteException
     {
        if(userExists(username))
        {
@@ -63,7 +97,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
     }
 
     @Override
-    public boolean logout(User loggedUser) throws RemoteException
+    public synchronized boolean logout(User loggedUser) throws RemoteException
     {
         if(userExists(loggedUser.getName()))
         {
@@ -73,5 +107,40 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
         }
         serverConsole.printLog(header, "User: " + loggedUser.getName() + " does not exist");
         return false;
+    }
+
+    @Override
+    public synchronized Test createTest(int howManyQuestions) throws RemoteException
+    {
+        int countedLines = countLines();
+        if (countedLines != notFound && howManyQuestions < countedLines)
+        {
+            List<Question> questions = Question.loadQuestions(questionsMainFilePath, howManyQuestions);
+            Test test = new Test(questions, testID,6000);
+            for (Question question : test.getQuestions())
+            {
+                serverConsole.printLog(header, question.toString());
+            }
+            return test;
+        }
+        return null;
+    }
+
+    @Override
+    public synchronized int receiveTestScore(Test test) throws RemoteException
+    {
+        if(test != null)
+        {
+            int totalPoints = 0;
+            for (Question question : test.getQuestions())
+            {
+                question.checkAnswer();
+                totalPoints += question.getPoint();
+            }
+
+            testList.add(test);
+            return totalPoints;
+        }
+        return notFound;
     }
 }
