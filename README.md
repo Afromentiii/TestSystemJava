@@ -22,9 +22,9 @@ String register(String username, String password, String email, String firstName
 boolean logout(User loggedUser) throws RemoteException;
 Test createTest(int howManyQuestions) throws RemoteException;
 int receiveTestScore(Test test) throws RemoteException;
-
 login : bazuje na prywatnej Mapie gdzie kluczem jest pseudonim a wartoscia Obiekt User, pozwala zalogowac sie istniejacemu uzytkownikowi o ile nie jest zalogowany
 register : tworzy uzytkownika i dodaje go do mapy o ile nie istnieje taki username
+
 logout : przyjmuje od klienta Obiekt User i wylogowuje go ustawiajac zmienna setLoggedIn na false
 createTest : tworzy i zwraca test na podstawie pytan utworzonych przez klase Question wczytanych z pliku pytania.txt
 receiveTestScore : przyjmuje Test sprawdza go i zwraca wynik oraz zapisuje go do listy testow
