@@ -25,14 +25,16 @@ public class ClientMain
             }
 
             System.out.println(serviceClient.login("TestUser", "Test"));
+            serviceClient.createTest(10);
 
             if(serviceClient.logout(client.getUser()))
             {
                 client.setUser(null);
             }
-            Thread.sleep(5000);
 
             System.out.println("Client " + client.getUser());
+
+            Thread.sleep(5000);
         }
         catch (Exception e)
         {
