@@ -13,8 +13,9 @@ public class ClientMain
         {
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
             InterfaceRMI serviceClient = (InterfaceRMI) registry.lookup("Testy");
-            System.out.println(serviceClient.register("TEST", "TEST","TEST","TEST","TEST"));
-            System.out.println(serviceClient.register("TEST", "TEST","TEST","TEST","TEST"));
+            Client client = new Client(null, false, serviceClient);
+
+
 
         }
         catch (Exception e)

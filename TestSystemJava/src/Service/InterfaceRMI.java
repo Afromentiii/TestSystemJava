@@ -7,6 +7,5 @@ public interface InterfaceRMI extends Remote
 {
     User login(String username, String password) throws RemoteException;
     String register(String username, String password, String email, String firstName, String surname) throws RemoteException;
-    boolean userExists(String username) throws RemoteException;
 
 }

@@ -9,6 +9,7 @@ public class User implements Serializable
     private String password;
     private String firstName;
     private String surname;
+    private boolean isLoggedIn;
 
     public User(String name, String email, String password, String firstName, String surname)
     {
@@ -17,6 +18,7 @@ public class User implements Serializable
         this.password = password;
         this.firstName = firstName;
         this.surname = surname;
+        this.isLoggedIn = false;
     }
 
     public String getSurname()
@@ -42,5 +44,15 @@ public class User implements Serializable
     public String getName()
     {
         return name;
+    }
+
+    public boolean getIsLoggedIn()
+    {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn)
+    {
+        isLoggedIn = loggedIn;
     }
 }
