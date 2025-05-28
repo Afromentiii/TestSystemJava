@@ -1,15 +1,18 @@
 package Server;
 
+import Service.ServerInterface;
+import Service.User;
+
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 
-public class Server implements ServerInterface
+public class Server extends UnicastRemoteObject implements ServerInterface
 {
-    private String header;
-    private Map<String, User> usersMap;
-    private Console serverConsole;
+    private final String header;
+    private final Map<String, User> usersMap;
+    private final Console serverConsole;
 
     @Override
     public boolean userExists(String username) throws RemoteException
@@ -17,7 +20,7 @@ public class Server implements ServerInterface
         return usersMap.containsKey(username);
     }
 
-    public Server()
+    public Server() throws RemoteException
     {
         super();
         usersMap = new HashMap<String, User>();
@@ -26,9 +29,9 @@ public class Server implements ServerInterface
     }
 
     @Override
-    public String register(String username, String password, String email) throws RemoteException
+    public String register(String username, String password, String email, String firstName, String surname) throws RemoteException
     {
-        User newUser = new User(username, password, email);
+        User newUser = new User(username, password, email, firstName, surname);
         if(userExists(username))
         {
             return "User: " + username + " already exists." + "Please choose another nickname!.";
@@ -42,6 +45,6 @@ public class Server implements ServerInterface
     @Override
     public User login(String username, String password) throws RemoteException
     {
-        return new User("D","D","DD");
+        return new User("D","D","DD","DD","DD");
     }
 }

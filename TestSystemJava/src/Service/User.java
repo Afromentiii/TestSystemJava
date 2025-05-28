@@ -1,4 +1,4 @@
-package Server;
+package Service;
 
 import java.io.Serializable;
 
@@ -7,11 +7,15 @@ public class User implements Serializable
     private String name;
     private String email;
     private String password;
+    private String firstName;
+    private String surname;
 
-    public User(String name, String email, String password)
+    public User(String name, String email, String password, String firstName, String surname)
     {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.firstName = firstName;
+        this.surname = surname;
     }
 }
