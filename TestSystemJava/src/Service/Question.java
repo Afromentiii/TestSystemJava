@@ -73,4 +73,51 @@ public class Question implements Serializable
     {
         this.userAnswer = userAnswer;
     }
+
+    public void checkAnswer()
+    {
+        if (userAnswer != null && userAnswer.equalsIgnoreCase(correctAnswer))
+        {
+            point = 1;
+        }
+        else
+        {
+            point = 0;
+        }
+    }
+
+    public String getQuestion()
+    {
+        return question;
+    }
+
+    public String getAnswerA()
+    {
+        return answerA;
+    }
+
+    public String getAnswerB()
+    {
+        return answerB;
+    }
+
+    public String getAnswerC()
+    {
+        return answerC;
+    }
+
+    public String getCorrectAnswer()
+    {
+        return correctAnswer;
+    }
+
+    public String getUserAnswer()
+    {
+        return userAnswer;
+    }
+
+    public int getPoint()
+    {
+        return point;
+    }
 }

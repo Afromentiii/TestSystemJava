@@ -9,4 +9,5 @@ public interface InterfaceRMI extends Remote
     String register(String username, String password, String email, String firstName, String surname) throws RemoteException;
     boolean logout(User loggedUser) throws RemoteException;
     Test createTest(int howManyQuestions) throws RemoteException;
+    int receiveTestScore(Test test) throws RemoteException;
 }
