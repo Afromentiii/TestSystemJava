@@ -14,68 +14,39 @@ RMI.
 Baza danych,
 Prosty webpanel.
 
-# 📚 System Zdalnego Testowania – Dokumentacja
+# 📚 Funkcje udostępniane przez RMI
 
-## 📘 Opis funkcjonalności RMI
+## 🔐 Autoryzacja
 
-### 🔐 Autoryzacja i Rejestracja
+### `User login(String username, String password) throws RemoteException`
+- Bazuje na prywatnej mapie, gdzie kluczem jest pseudonim, a wartością obiekt `User`.
+- Pozwala zalogować się istniejącemu użytkownikowi, o ile **nie jest zalogowany**.
 
-#### `User login(String username, String password) throws RemoteException`
-- Loguje istniejącego użytkownika.
-- Dane użytkowników przechowywane są w mapie `Map<String, User>`, gdzie kluczem jest `username`.
-- Użytkownik może się zalogować tylko, jeśli:
-  - Istnieje w systemie.
-  - Nie jest już zalogowany.
+### `String register(String username, String password, String email, String firstName, String surname) throws RemoteException`
+- Tworzy użytkownika i dodaje go do mapy, o ile **nie istnieje taki `username`**.
 
-#### `String register(String username, String password, String email, String firstName, String surname) throws RemoteException`
-- Rejestruje nowego użytkownika, o ile dany `username` nie jest już zajęty.
-- Tworzy obiekt `User` i dodaje go do mapy użytkowników.
-
-#### `boolean logout(User loggedUser) throws RemoteException`
-- Wylogowuje użytkownika.
-- Ustawia pole `loggedIn` w obiekcie `User` na `false`.
+### `boolean logout(User loggedUser) throws RemoteException`
+- Przyjmuje od klienta obiekt `User` i wylogowuje go, ustawiając zmienną `setLoggedIn` na `false`.
 
 ---
 
-### 📋 Obsługa Testów
+## 🧪 Obsługa testów
 
-#### `Test createTest(int howManyQuestions) throws RemoteException`
-- Tworzy test złożony z określonej liczby pytań.
-- Pytania są losowane z pliku `pytania.txt`, wykorzystując klasę `Question`.
+### `Test createTest(int howManyQuestions) throws RemoteException`
+- Tworzy i zwraca test na podstawie pytań utworzonych przez klasę `Question`.
+- Pytania są wczytywane z pliku `pytania.txt`.
 
-#### `int receiveTestScore(Test test) throws RemoteException`
-- Ocenia przesłany test.
-- Zwraca liczbę zdobytych punktów.
-- Wynik jest zapisywany do historii testów danego użytkownika.
-
----
-
-### 🖥️ Funkcje dodatkowe
-
-- **Konsola serwera (`Console`)**:
-  - Wyświetla komunikaty o działaniach użytkowników i systemu.
-- Możliwość dodania GUI po stronie serwera, np.:
-  - Podgląd aktywności użytkowników.
-  - Panel administracyjny.
+### `int receiveTestScore(Test test) throws RemoteException`
+- Przyjmuje test, sprawdza go i zwraca wynik.
+- Zapisuje wynik do listy testów.
 
 ---
 
-### 🧪 Planowane rozszerzenia
+## 🖥️ Informacje dodatkowe
 
-- Statystyki użytkownika:
-  - Liczba wykonanych testów.
-  - Średni wynik.
-  - Historia odpowiedzi.
-- Szczegółowy podgląd wykonanych testów.
-- Kategoryzacja testów i limity czasu.
-- System powiadomień lub rankingów.
+- Serwer posiada swoją konsolę (klasa: `Console`), która wyświetla komunikaty w konsoli.
+- Można dodać np. frontend po stronie serwera, żeby miał okienkowy podgląd.
+- Przydałoby się zrobić np. **statystyki danego użytkownika**, **podgląd wykonanych testów** itp.
+- Na razie została utworzona **tymczasowa funkcja do przeprowadzenia testu**.
 
 ---
-
-### ⚙️ Uwagi developerskie
-
-- Istnieje tymczasowa metoda do przeprowadzania testu – wymaga rozbudowy.
-- System powinien zostać rozszerzony o:
-  - Obsługę wyjątków (np. błędne logowanie, rejestracja duplikatu).
-  - Trwałe przechowywanie danych (np. z użyciem bazy danych).
-
