@@ -14,7 +14,7 @@ RMI.
 Baza danych,
 Prosty webpanel.
 
-#Notatki
+# Notatki
 Funkcje udostępniane przez RMI to:
 
 User login(String username, String password) throws RemoteException;
