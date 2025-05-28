@@ -47,11 +47,18 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
     {
        if(userExists(username))
        {
-           if(usersMap.get(username).getPassword().equals(password))
+           User foundUser = usersMap.get(username);
+           if(foundUser.getPassword().equals(password))
            {
-               return usersMap.get(username);
+               if(!foundUser.getIsLoggedIn())
+               {
+                   foundUser.setLoggedIn(true);
+                   serverConsole.printLog(header, "User: " + username + " has been logged in!");
+                   return foundUser;
+               }
            }
        }
+       serverConsole.printLog(header, "User: " + username + " does not exist" + " or is logged in!");
        return null;
     }
 }

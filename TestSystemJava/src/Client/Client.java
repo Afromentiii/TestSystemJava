@@ -8,7 +8,7 @@ public class Client
     private User user;
     private InterfaceRMI serviceClient;
 
-    public Client(User user, boolean isLoggedIn, InterfaceRMI serviceClient)
+    public Client(User user, InterfaceRMI serviceClient)
     {
         this.user = user;
         this.serviceClient = serviceClient;

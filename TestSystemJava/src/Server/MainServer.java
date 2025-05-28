@@ -12,7 +12,7 @@ public class MainServer
             Registry registry = LocateRegistry.createRegistry(1099);
             Server serverInstance = new Server();
             registry.rebind("Testy", serverInstance);
-            System.out.println("Serwer działa...");
+            System.out.println("Server started!");
 
         }
         catch (Exception e)

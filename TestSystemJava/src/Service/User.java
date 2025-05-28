@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class User implements Serializable
 {
+    private static final long serialVersionUID = 1L;
     private String name;
     private String email;
     private String password;
@@ -11,7 +12,7 @@ public class User implements Serializable
     private String surname;
     private boolean isLoggedIn;
 
-    public User(String name, String email, String password, String firstName, String surname)
+    public User(String name, String password, String email, String firstName, String surname)
     {
         this.name = name;
         this.email = email;
