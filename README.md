@@ -14,21 +14,68 @@ RMI.
 Baza danych,
 Prosty webpanel.
 
-# Notatki
-Funkcje udostępniane przez RMI to:
+# 📚 System Zdalnego Testowania – Dokumentacja
 
-User login(String username, String password) throws RemoteException;
-String register(String username, String password, String email, String firstName, String surname) throws RemoteException;
-boolean logout(User loggedUser) throws RemoteException;
-Test createTest(int howManyQuestions) throws RemoteException;
-int receiveTestScore(Test test) throws RemoteException;
-login : bazuje na prywatnej Mapie gdzie kluczem jest pseudonim a wartoscia Obiekt User, pozwala zalogowac sie istniejacemu uzytkownikowi o ile nie jest zalogowany
-register : tworzy uzytkownika i dodaje go do mapy o ile nie istnieje taki username
+## 📘 Opis funkcjonalności RMI
 
-logout : przyjmuje od klienta Obiekt User i wylogowuje go ustawiajac zmienna setLoggedIn na false
-createTest : tworzy i zwraca test na podstawie pytan utworzonych przez klase Question wczytanych z pliku pytania.txt
-receiveTestScore : przyjmuje Test sprawdza go i zwraca wynik oraz zapisuje go do listy testow
+### 🔐 Autoryzacja i Rejestracja
 
-Serwer posiada swoja konsole (Klasa:Console) ktora wyswietla komunikaty w konsoli, mozna dodac np frontend po stronie serwera zeby mial okienkowy podglad
-Przydaloby sie zrobic np statystyki danego uzytkownika, podglad wykonaych testow itp
-Na razie zostala utworzona tymczasowa funkcja do przeprowadzenia testu.
+#### `User login(String username, String password) throws RemoteException`
+- Loguje istniejącego użytkownika.
+- Dane użytkowników przechowywane są w mapie `Map<String, User>`, gdzie kluczem jest `username`.
+- Użytkownik może się zalogować tylko, jeśli:
+  - Istnieje w systemie.
+  - Nie jest już zalogowany.
+
+#### `String register(String username, String password, String email, String firstName, String surname) throws RemoteException`
+- Rejestruje nowego użytkownika, o ile dany `username` nie jest już zajęty.
+- Tworzy obiekt `User` i dodaje go do mapy użytkowników.
+
+#### `boolean logout(User loggedUser) throws RemoteException`
+- Wylogowuje użytkownika.
+- Ustawia pole `loggedIn` w obiekcie `User` na `false`.
+
+---
+
+### 📋 Obsługa Testów
+
+#### `Test createTest(int howManyQuestions) throws RemoteException`
+- Tworzy test złożony z określonej liczby pytań.
+- Pytania są losowane z pliku `pytania.txt`, wykorzystując klasę `Question`.
+
+#### `int receiveTestScore(Test test) throws RemoteException`
+- Ocenia przesłany test.
+- Zwraca liczbę zdobytych punktów.
+- Wynik jest zapisywany do historii testów danego użytkownika.
+
+---
+
+### 🖥️ Funkcje dodatkowe
+
+- **Konsola serwera (`Console`)**:
+  - Wyświetla komunikaty o działaniach użytkowników i systemu.
+- Możliwość dodania GUI po stronie serwera, np.:
+  - Podgląd aktywności użytkowników.
+  - Panel administracyjny.
+
+---
+
+### 🧪 Planowane rozszerzenia
+
+- Statystyki użytkownika:
+  - Liczba wykonanych testów.
+  - Średni wynik.
+  - Historia odpowiedzi.
+- Szczegółowy podgląd wykonanych testów.
+- Kategoryzacja testów i limity czasu.
+- System powiadomień lub rankingów.
+
+---
+
+### ⚙️ Uwagi developerskie
+
+- Istnieje tymczasowa metoda do przeprowadzania testu – wymaga rozbudowy.
+- System powinien zostać rozszerzony o:
+  - Obsługę wyjątków (np. błędne logowanie, rejestracja duplikatu).
+  - Trwałe przechowywanie danych (np. z użyciem bazy danych).
+
