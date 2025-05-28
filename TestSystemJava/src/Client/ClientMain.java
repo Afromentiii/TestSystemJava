@@ -1,7 +1,6 @@
 package Client;
 
-import Server.Server;
-import Service.ServerInterface;
+import Service.InterfaceRMI;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -13,8 +12,10 @@ public class ClientMain
         try
         {
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-            ServerInterface serviceClient = (ServerInterface) registry.lookup("Testy");
+            InterfaceRMI serviceClient = (InterfaceRMI) registry.lookup("Testy");
             System.out.println(serviceClient.register("TEST", "TEST","TEST","TEST","TEST"));
+            System.out.println(serviceClient.register("TEST", "TEST","TEST","TEST","TEST"));
+
         }
         catch (Exception e)
         {

@@ -18,4 +18,29 @@ public class User implements Serializable
         this.firstName = firstName;
         this.surname = surname;
     }
+
+    public String getSurname()
+    {
+        return surname;
+    }
+
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
 }

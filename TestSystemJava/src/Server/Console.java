@@ -10,6 +10,6 @@ public class Console
         LocalDateTime data = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String dataFormated = data.format(formatter);
-        System.out.println("[" + dataFormated + "]" +  header + ":" + message);
+        System.out.println("[" + dataFormated + "]" +  header + "[MESSAGE=" + message + "]");
     }
 }

@@ -1,6 +1,6 @@
 package Server;
 
-import Service.ServerInterface;
+import Service.InterfaceRMI;
 import Service.User;
 
 import java.rmi.RemoteException;
@@ -8,7 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Server extends UnicastRemoteObject implements ServerInterface
+public class Server extends UnicastRemoteObject implements InterfaceRMI
 {
     private final String header;
     private final Map<String, User> usersMap;
@@ -34,10 +34,11 @@ public class Server extends UnicastRemoteObject implements ServerInterface
         User newUser = new User(username, password, email, firstName, surname);
         if(userExists(username))
         {
-            return "User: " + username + " already exists." + "Please choose another nickname!.";
+            return "User: " + username + " already exists." + " Please choose another nickname!";
         }
 
         String message = "User: " + username + " has been registered!";
+        usersMap.put(username, newUser);
         serverConsole.printLog(header, message);
         return message;
     }
