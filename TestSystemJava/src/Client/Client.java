@@ -6,22 +6,10 @@ import Service.User;
 public class Client
 {
     private User user;
-    private InterfaceRMI serviceClient;
 
     public Client(User user, InterfaceRMI serviceClient)
     {
         this.user = user;
-        this.serviceClient = serviceClient;
-    }
-
-    public InterfaceRMI getServiceClient()
-    {
-        return serviceClient;
-    }
-
-    public void setServiceClient(InterfaceRMI serviceClient)
-    {
-        this.serviceClient = serviceClient;
     }
 
     public User getUser()

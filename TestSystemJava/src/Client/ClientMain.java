@@ -1,6 +1,7 @@
 package Client;
 
 import Service.InterfaceRMI;
+import Service.User;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -15,11 +16,23 @@ public class ClientMain
             InterfaceRMI serviceClient = (InterfaceRMI) registry.lookup("Testy");
             Client client = new Client(null, serviceClient);
 
-            System.out.println(client.getServiceClient().register("TestUser", "Test", "janek2001@gmail.com", "Janek", "Kowalski"));
-            System.out.println(client.getServiceClient().login("TestUser", "Test"));
-            System.out.println(client.getServiceClient().login("TestUser", "Test"));
+            System.out.println(serviceClient.register("TestUser", "Test", "janek2001@gmail.com", "Janek", "Kowalski"));
 
+            User user = serviceClient.login("TestUser", "Test");
+            if(user != null)
+            {
+                client.setUser(user);
+            }
+
+            System.out.println(serviceClient.login("TestUser", "Test"));
+
+            if(serviceClient.logout(client.getUser()))
+            {
+                client.setUser(null);
+            }
             Thread.sleep(5000);
+
+            System.out.println("Client " + client.getUser());
         }
         catch (Exception e)
         {

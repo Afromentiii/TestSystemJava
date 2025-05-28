@@ -34,7 +34,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
         {
             return "User: " + username + " already exists." + " Please choose another nickname!";
         }
-
+        //Mozna dodac tu obsluge poprawnosci danych wedlug jakis kryteriow
         User newUser = new User(username, password, email, firstName, surname);
         String message = "User: " + username + " has been registered!";
         usersMap.put(username, newUser);
@@ -60,5 +60,18 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
        }
        serverConsole.printLog(header, "User: " + username + " does not exist" + " or is logged in!");
        return null;
+    }
+
+    @Override
+    public boolean logout(User loggedUser) throws RemoteException
+    {
+        if(userExists(loggedUser.getName()))
+        {
+            loggedUser.setLoggedIn(false);
+            serverConsole.printLog(header, "User: " + loggedUser.getName() + " has dissconnected!");
+            return true;
+        }
+        serverConsole.printLog(header, "User: " + loggedUser.getName() + " does not exist");
+        return false;
     }
 }
