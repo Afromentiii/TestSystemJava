@@ -97,15 +97,16 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
     }
 
     @Override
-    public synchronized boolean logout(User loggedUser) throws RemoteException
+    public synchronized boolean logout(String username) throws RemoteException
     {
-        if(userExists(loggedUser.getName()))
+        if(userExists(username))
         {
-            loggedUser.setLoggedIn(false);
-            serverConsole.printLog(header, "User: " + loggedUser.getName() + " has dissconnected!");
+            User foundUser = usersMap.get(username);
+            foundUser.setLoggedIn(false);
+            serverConsole.printLog(header, "User: " + foundUser.getName() + " has dissconnected!");
             return true;
         }
-        serverConsole.printLog(header, "User: " + loggedUser.getName() + " does not exist");
+        serverConsole.printLog(header, "User: " + username + " does not exist");
         return false;
     }
 

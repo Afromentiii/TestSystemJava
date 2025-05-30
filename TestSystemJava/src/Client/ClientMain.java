@@ -26,18 +26,19 @@ public class ClientMain
             }
 
             System.out.println(serviceClient.login("TestUser", "Test"));
-            Test test = serviceClient.createTest(1);
-            test.startTest();
-            System.out.println(serviceClient.receiveTestScore(test));
+            //Test test = serviceClient.createTest(1);
+            //test.startTest();
+            //System.out.println(serviceClient.receiveTestScore(test));
 
-            if(serviceClient.logout(client.getUser()))
+            if(serviceClient.logout(client.getUser().getName()))
             {
                 client.setUser(null);
             }
 
             System.out.println("Client " + client.getUser());
+            System.out.println(serviceClient.login("TestUser", "Test"));
 
-            Thread.sleep(5000);
+            Thread.sleep(50000);
         }
         catch (Exception e)
         {
