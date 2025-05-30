@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Test implements Serializable
 {
+    private User user;
     private int id;
     private List<Question> questions;
     private final long testMaxTime;
@@ -88,5 +89,15 @@ public class Test implements Serializable
     public void setTestScore(int testScore)
     {
         this.testScore = testScore;
+    }
+
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
     }
 }

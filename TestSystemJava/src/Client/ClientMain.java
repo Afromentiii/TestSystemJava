@@ -6,6 +6,7 @@ import Service.User;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.AbstractMap;
 
 public class ClientMain
 {
@@ -25,10 +26,12 @@ public class ClientMain
                 client.setUser(user);
             }
 
+            //Server tworzy obiekt test, Klient podaje id testu
+            //createTest() dorzucic argument typu User, zwraca id,
+            //getQuestions() id testu, numer pytania;
             System.out.println(serviceClient.login("TestUser", "Test"));
-            //Test test = serviceClient.createTest(1);
-            //test.startTest();
-            //System.out.println(serviceClient.receiveTestScore(test));
+            AbstractMap.SimpleImmutableEntry<Integer, Integer> testPair = serviceClient.createTest(client.getUser());
+
 
             if(serviceClient.logout(client.getUser().getName()))
             {
