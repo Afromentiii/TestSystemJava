@@ -1,14 +1,19 @@
-package Client;
+package org.example;
 
-import Service.InterfaceRMI;
-import Service.Question;
-import Service.Test;
-import Service.User;
+import org.example.InterfaceRMI;
+import org.example.Question;
+import org.example.Test;
+import org.example.User;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.AbstractMap;
 import java.util.Scanner;
+
+import javafx.application.Application;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class ClientMain
 {
