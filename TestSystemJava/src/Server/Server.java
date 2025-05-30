@@ -22,9 +22,14 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
     private static int testID;
     private final Map<Integer, Test> testsMap;
 
-    private boolean userExists(String username) throws RemoteException
+    private boolean userExists(String username)
     {
         return usersMap.containsKey(username);
+    }
+
+    private boolean testExists(Integer testID)
+    {
+        return testsMap.containsKey(testID);
     }
 
     public Server() throws RemoteException
@@ -110,7 +115,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
     @Override
     public synchronized AbstractMap.SimpleImmutableEntry<Integer, Integer>  createTest(User clientUser) throws RemoteException
     {
-        int howManyQuestions = 10;
+        int howManyQuestions = 1;
         int countedLines = countLines();
         if (countedLines != notFound && howManyQuestions < countedLines)
         {
@@ -122,14 +127,17 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
             {
                 serverConsole.printLog(header, question.toString());
             }
-            return new AbstractMap.SimpleImmutableEntry<>(testID, howManyQuestions);
+            Integer currentTestID = testID;
+            testID++;
+            return new AbstractMap.SimpleImmutableEntry<>(currentTestID, howManyQuestions);
         }
         return new AbstractMap.SimpleImmutableEntry<>(notFound, notFound);
     }
 
     @Override
-    public synchronized int receiveTestScore(Test test) throws RemoteException
+    public synchronized Integer receiveTestScore(Integer testID) throws RemoteException
     {
+        Test test = testsMap.get(testID);
         if(test != null)
         {
             int totalPoints = 0;
@@ -141,5 +149,29 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
             return totalPoints;
         }
         return notFound;
+    }
+
+    @Override
+    public synchronized Question getTestQuestion(Integer testID, Integer questionID) throws RemoteException
+    {
+        if(testExists(testID))
+        {
+            serverConsole.printLog(header, "Test: " + testID + " exists! " + "Sending question: " + questionID);
+            return testsMap.get(testID).getQuestions().get(questionID);
+        }
+        return null;
+    }
+
+    @Override
+    public synchronized boolean sendTestQuestion(Integer testID, Integer questionID, String answer) throws RemoteException
+    {
+        if(testExists(testID))
+        {
+            Test test = testsMap.get(testID);
+            test.getQuestions().get(questionID).setUserAnswer(answer);
+            serverConsole.printLog(header,"Test: " + testID + " got answer: " + answer + " Sending question: " + questionID);
+            return true;
+        }
+        return false;
     }
 }

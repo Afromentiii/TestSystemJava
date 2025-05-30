@@ -1,12 +1,14 @@
 package Client;
 
 import Service.InterfaceRMI;
+import Service.Question;
 import Service.Test;
 import Service.User;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.AbstractMap;
+import java.util.Scanner;
 
 public class ClientMain
 {
@@ -24,24 +26,17 @@ public class ClientMain
             if(user != null)
             {
                 client.setUser(user);
+                System.out.println(serviceClient.login("TestUser", "Test"));
+                AbstractMap.SimpleImmutableEntry<Integer, Integer> testPair = client.serviceClient.createTest(client.getUser());
+                client.solveTest(testPair);
+                System.out.println(serviceClient.receiveTestScore(testPair.getKey()));
+
             }
-
-            //Server tworzy obiekt test, Klient podaje id testu
-            //createTest() dorzucic argument typu User, zwraca id,
-            //getQuestions() id testu, numer pytania;
-            System.out.println(serviceClient.login("TestUser", "Test"));
-            AbstractMap.SimpleImmutableEntry<Integer, Integer> testPair = serviceClient.createTest(client.getUser());
-
 
             if(serviceClient.logout(client.getUser().getName()))
             {
                 client.setUser(null);
             }
-
-            System.out.println("Client " + client.getUser());
-            System.out.println(serviceClient.login("TestUser", "Test"));
-
-            Thread.sleep(50000);
         }
         catch (Exception e)
         {
