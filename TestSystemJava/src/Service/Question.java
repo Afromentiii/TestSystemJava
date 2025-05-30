@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Question implements Serializable
 {
@@ -26,6 +27,7 @@ public class Question implements Serializable
         this.answerC = answerC;
         this.correctAnswer = correctAnswer;
         this.point = 0;
+        this.userAnswer = null;
     }
 
     @Override
@@ -67,6 +69,35 @@ public class Question implements Serializable
             e.printStackTrace();
         }
         return questions;
+    }
+
+    public String displayAndInput(Scanner scanner)
+    {
+        System.out.println(this.getQuestion());
+        System.out.println("A: " + this.getAnswerA());
+        System.out.println("B: " + this.getAnswerB());
+        System.out.println("C: " + this.getAnswerC());
+
+        System.out.print("Wpisz odpowiedź (A/B/C): ");
+
+        String answer = scanner.nextLine().trim();
+        if (answer.equalsIgnoreCase("A"))
+        {
+            answer = getAnswerA();
+        }
+
+        if (answer.equalsIgnoreCase("B"))
+        {
+            answer = getAnswerB();
+
+        }
+        if (answer.equalsIgnoreCase("C"))
+        {
+            answer = getAnswerC();
+
+        }
+
+        return answer;
     }
 
     public void setUserAnswer(String userAnswer)

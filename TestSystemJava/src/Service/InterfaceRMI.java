@@ -11,7 +11,7 @@ public interface InterfaceRMI extends Remote
     String register(String username, String password, String email, String firstName, String surname) throws RemoteException;
     boolean logout(String username) throws RemoteException;
     AbstractMap.SimpleImmutableEntry<Integer, Integer> createTest(User user) throws RemoteException;
-    int receiveTestScore(Test test) throws RemoteException;
+    Integer receiveTestScore(Integer testID) throws RemoteException;
     Question getTestQuestion(Integer testID, Integer questionID) throws RemoteException;
-    boolean sendTestQuestion(Integer testID, Question question) throws RemoteException;
+    boolean sendTestQuestion(Integer testID, Integer questionID, String answer) throws RemoteException;
 }
