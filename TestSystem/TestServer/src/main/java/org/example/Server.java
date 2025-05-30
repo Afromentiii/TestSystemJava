@@ -1,9 +1,9 @@
-package Server;
+package org.example;
 
-import Service.InterfaceRMI;
-import Service.Question;
-import Service.Test;
-import Service.User;
+import org.example.InterfaceRMI;
+import org.example.Question;
+import org.example.Test;
+import org.example.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -81,21 +81,21 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
     @Override
     public synchronized User login(String username, String password) throws RemoteException
     {
-       if(userExists(username))
-       {
-           User foundUser = usersMap.get(username);
-           if(foundUser.getPassword().equals(password))
-           {
-               if(!foundUser.getIsLoggedIn())
-               {
-                   foundUser.setLoggedIn(true);
-                   serverConsole.printLog(header, "User: " + username + " has been logged in!");
-                   return foundUser;
-               }
-           }
-       }
-       serverConsole.printLog(header, "User: " + username + " does not exist" + " or is logged in!");
-       return null;
+        if(userExists(username))
+        {
+            User foundUser = usersMap.get(username);
+            if(foundUser.getPassword().equals(password))
+            {
+                if(!foundUser.getIsLoggedIn())
+                {
+                    foundUser.setLoggedIn(true);
+                    serverConsole.printLog(header, "User: " + username + " has been logged in!");
+                    return foundUser;
+                }
+            }
+        }
+        serverConsole.printLog(header, "User: " + username + " does not exist" + " or is logged in!");
+        return null;
     }
 
     @Override

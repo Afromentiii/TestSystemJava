@@ -1,8 +1,8 @@
-package Client;
+package org.example;
 
-import Service.InterfaceRMI;
-import Service.Question;
-import Service.User;
+import org.example.InterfaceRMI;
+import org.example.Question;
+import org.example.User;
 
 import java.rmi.RemoteException;
 import java.util.AbstractMap;
