@@ -10,10 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Server extends UnicastRemoteObject implements InterfaceRMI
 {
@@ -23,7 +20,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
     private final int notFound = -1;
     private final String questionsMainFilePath;
     private static int testID;
-    private final List<Test> testList;
+    private final Map<Integer, Test> testsMap;
 
     private boolean userExists(String username) throws RemoteException
     {
@@ -38,7 +35,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
         header = "[SERVER]";
         questionsMainFilePath = "src/pytania.txt";
         testID = 0;
-        testList = new ArrayList<Test>();
+        testsMap =  new HashMap<Integer, Test>();
     }
 
     private int countLines()
@@ -111,20 +108,23 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
     }
 
     @Override
-    public synchronized Test createTest(int howManyQuestions) throws RemoteException
+    public synchronized AbstractMap.SimpleImmutableEntry<Integer, Integer>  createTest(User clientUser) throws RemoteException
     {
+        int howManyQuestions = 10;
         int countedLines = countLines();
         if (countedLines != notFound && howManyQuestions < countedLines)
         {
             List<Question> questions = Question.loadQuestions(questionsMainFilePath, howManyQuestions);
             Test test = new Test(questions, testID,6000);
+            test.setUser(clientUser);
+            testsMap.put(testID, test);
             for (Question question : test.getQuestions())
             {
                 serverConsole.printLog(header, question.toString());
             }
-            return test;
+            return new AbstractMap.SimpleImmutableEntry<>(testID, howManyQuestions);
         }
-        return null;
+        return new AbstractMap.SimpleImmutableEntry<>(notFound, notFound);
     }
 
     @Override
@@ -138,8 +138,6 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
                 question.checkAnswer();
                 totalPoints += question.getPoint();
             }
-
-            testList.add(test);
             return totalPoints;
         }
         return notFound;
