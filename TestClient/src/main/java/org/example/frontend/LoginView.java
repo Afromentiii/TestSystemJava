@@ -30,6 +30,8 @@ public class LoginView extends VBox {
         loginButton.setOnAction(event -> {
             if(client.loginUser(usernameField.getText(), passwordField.getText()) && onLoginSuccess != null) {
                 onLoginSuccess.run();
+            } else {
+                statusLabel.setText("Invalid username or password");
             }
         });
 
@@ -38,7 +40,7 @@ public class LoginView extends VBox {
             this.onBackPressed.run();
         });
 
-        getChildren().addAll(usernameField, passwordField, loginButton, statusLabel);
+        getChildren().addAll(statusLabel, usernameField, passwordField, loginButton, backButton);
     }
 
     public void setOnLoginSuccess(Runnable callback) {
