@@ -8,7 +8,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="TaskClient" />
         <module name="TaskServer" />
+        <module name="TestService" />
         <module name="TaskService" />
+        <module name="TestClient" />
+        <module name="TestServer" />
       </profile>
     </annotationProcessing>
   </component>
