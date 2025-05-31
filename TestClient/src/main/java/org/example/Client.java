@@ -13,6 +13,11 @@ public class Client {
     private User user;
     InterfaceRMI serviceClient;
 
+    private boolean isTestActive = false;
+    private int questionAmount;
+    private int currentQuestion;
+    private int testId;
+
     public Client(User user, InterfaceRMI serviceClient) {
         this.user = user;
         this.serviceClient = serviceClient;
@@ -24,6 +29,18 @@ public class Client {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isTestActive() {
+        return isTestActive;
+    }
+
+    public int getQuestionAmount() {
+        return questionAmount;
+    }
+
+    public int getCurrentQuestion() {
+        return currentQuestion;
     }
 
     public void solveTest(AbstractMap.SimpleImmutableEntry<Integer, Integer> testPair) throws RemoteException {
@@ -55,4 +72,39 @@ public class Client {
         }
         return result;
     }
+
+    public boolean logoutUser() {
+        boolean result = false;
+        try{
+            result = this.serviceClient.logout(this.user.getName());
+            this.user = null;
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            result = false;
+        }
+        return result;
+    }
+
+    public void createTest() {
+        try{
+            AbstractMap.SimpleImmutableEntry<Integer, Integer> testParameters = this.serviceClient.createTest(this.user);
+            if(testParameters != null) {
+                this.testId = testParameters.getKey();
+                this.questionAmount = testParameters.getValue();
+                this.currentQuestion = 0;
+                this.isTestActive = true;
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendResponse(String answer){
+        try {
+            this.serviceClient.sendTestQuestion(this.testId, this.currentQuestion, answer);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
