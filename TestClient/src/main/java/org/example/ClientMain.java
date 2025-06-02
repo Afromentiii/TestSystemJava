@@ -13,84 +13,77 @@ public class ClientMain extends Application {
     private static Client client;
     private static Scene mainScene;
 
+    private final EntryView entryView = new EntryView();
+    private WelcomeView welcomeView;
+
     public void renderScoring(){
         Pair<Integer, Integer> scoring = client.getScoring();
         ScoringView scoringView = new ScoringView(scoring.getKey(), scoring.getValue());
         scoringView.setBackToWelcome(() -> {
-
+            mainScene.setRoot(welcomeView);
         });
         mainScene.setRoot(scoringView);
-        return;
     }
 
-    public void renderQuestion() {
+    public void renderQuestionView() {
         QuestionView questionView = new QuestionView(
                 client.getNextQuestion(),
-                client.getCurrentQuestionNumber(),
+                client.getCurrentQuestionNumber() + 1,
                 client.getQuestionAmount()
         );
 
         questionView.setResponseCallback(response -> {
-            client.sendResponse(response); // prawdopodobnie inkrementuje wewnętrzny licznik pytania
-            renderQuestion();              // wywołaj kolejne pytanie
+            client.sendResponse(response);
+            if(client.getCurrentQuestionNumber() < client.getQuestionAmount()) renderQuestionView();
+            else renderScoring();
         });
-
-        if(client.getCurrentQuestionNumber() + 1 >= client.getQuestionAmount()) {
-            questionView.setResponseCallback(e -> {
-                renderScoring();
-                return;
-            });
-        }
-
         mainScene.setRoot(questionView);
     }
 
 
-    public void conductTest(Stage primaryStage) {
+    public void conductTest() {
         client.createTest();
-        renderQuestion();
+        renderQuestionView();
     }
 
+    public void renderRegisterView(){
+        RegisterView registerView = new RegisterView(client);
+        registerView.setOnBackPressed(() -> mainScene.setRoot(entryView));
+        mainScene.setRoot(registerView);
+    }
 
+    public void renderStartTestView(){
+        StartTestView startTestView = new StartTestView();
+        startTestView.setYesButtonCallback(this::conductTest);
+        startTestView.setNoButtonCallback(() -> mainScene.setRoot(welcomeView));
+        mainScene.setRoot(startTestView);
+    }
+
+    public void renderWelcomeView(){
+        welcomeView = new WelcomeView(client.getUser().getFirstName(), client.getUser().getSurname());
+        welcomeView.setLogout(() -> {
+            client.logoutUser();
+            mainScene.setRoot(entryView);
+        });
+        welcomeView.setStartTest(this::renderStartTestView);
+        mainScene.setRoot(welcomeView);
+    }
+
+    public void renderLoginView(){
+        LoginView loginView = new LoginView(client);
+        loginView.setOnBackPressed(() -> mainScene.setRoot(entryView));
+        loginView.setOnLoginSuccess(this::renderWelcomeView);
+        mainScene.setRoot(loginView);
+    }
 
     @Override
     public void start(Stage primaryStage) {
 
-        //Views
-        LoginView loginView = new LoginView(primaryStage, client);
-        RegisterView registerView = new RegisterView(primaryStage, client);
-        EntryView entryView = new EntryView(primaryStage, client);
-        WelcomeView welcomeView = new WelcomeView(primaryStage);
-        StartTestView startTestView = new StartTestView(primaryStage);
-
-        //Scenes
+        entryView.setOnLogin(this::renderLoginView);
+        entryView.setOnRegister(this::renderRegisterView);
         mainScene = new Scene(entryView, 500, 500);
 
-        // Callbacks
-        entryView.setOnLogin(() -> {
-            loginView.refresh();
-            mainScene.setRoot(loginView);
-        });
-        entryView.setOnRegister(() -> {
-            registerView.refresh();
-            mainScene.setRoot(registerView);
-        });
-
-        loginView.setOnLoginSuccess(() -> {
-            welcomeView.refresh(client);
-            mainScene.setRoot(welcomeView);
-        });
-        loginView.setOnBackPressed(() -> mainScene.setRoot(entryView));
-
-        registerView.setOnBackPressed(() -> mainScene.setRoot(entryView));
-
-        welcomeView.setLogout(() -> mainScene.setRoot(entryView));
-        welcomeView.setStartTest(() -> mainScene.setRoot(startTestView));
-
-        startTestView.setYesButtonCallback(() -> conductTest(primaryStage));
-        startTestView.setNoButtonCallback(() -> mainScene.setRoot(welcomeView));
-
-
+        primaryStage.resizableProperty().setValue(Boolean.FALSE);
         primaryStage.setTitle("RMI Testing App");
         primaryStage.setScene(mainScene);
         primaryStage.show();
@@ -104,8 +97,11 @@ public class ClientMain extends Application {
 
             launch(args);
 
+        } catch (java.rmi.ConnectException e) {
+            System.out.printf("Cannot connect to server. Please check if it is running on localhost:1099\n");
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.exit(0);
     }
 }

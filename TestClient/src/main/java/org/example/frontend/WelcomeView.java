@@ -1,44 +1,52 @@
 package org.example.frontend;
 
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import org.example.Client;
 
-import javafx.scene.control.Label;
-
 public class WelcomeView extends VBox {
-    private Label title;
     private Runnable logout;
     private Runnable startTest;
     private Client client;
 
-    public WelcomeView(Stage stage) {
-        setPadding(new Insets(30));
-        setSpacing(10);
-
-        title = new Label();
-
-        Button logoutButton = new Button("Logout");
-        logoutButton.setOnAction(e -> {
-            this.client.logoutUser();
-            this.client = null;
-            this.logout.run();
-        });
-
-        Button startTestButton = new Button("Start test!");
-        startTestButton.setOnAction(e -> {
-            this.startTest.run();
-        });
-
-        getChildren().addAll(title, startTestButton, logoutButton);
+    static class MyButton extends Button {
+        public MyButton(String text) {
+            super(text);
+            this.setFont(Font.font("Arial", 18));
+            this.setPrefSize(900, 50);
+            this.setCursor(javafx.scene.Cursor.HAND);
+        }
     }
 
-    public void refresh(Client client){
-        this.client = client;
-        title.setText("Welcome, " + this.client.getUser().getName());
+    static class MyLabel extends Label {
+        public MyLabel(String text) {
+            super(text);
+            this.setFont(Font.font("Arial", 18));
+            this.setPrefSize(500, 40);
+            this.setPadding(new Insets(10));
+            this.setAlignment(javafx.geometry.Pos.CENTER);
+            this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+            this.setBorder(new Border(new BorderStroke(
+                    Color.LIGHTGRAY, BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(1)
+            )));
+        }
+    }
+
+    public WelcomeView(String firstName, String lastName) {
+        setPadding(new Insets(50, 30, 30, 30));
+        setSpacing(30);
+
+        MyLabel title = new MyLabel("Welcome, " + firstName + " " + lastName + "!");
+        MyButton logoutButton = new MyButton("Logout");
+        logoutButton.setOnAction(e -> this.logout.run());
+
+        MyButton startTestButton = new MyButton("Start test!");
+        startTestButton.setOnAction(e -> this.startTest.run());
+        getChildren().addAll(title, startTestButton, logoutButton);
     }
 
     public void setLogout(Runnable logout){
