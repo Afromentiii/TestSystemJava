@@ -116,7 +116,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
     @Override
     public synchronized AbstractMap.SimpleImmutableEntry<Integer, Integer>  createTest(User clientUser) throws RemoteException
     {
-        int howManyQuestions = 1;
+        int howManyQuestions = 5;
         int countedLines = countLines();
         if (countedLines != notFound && howManyQuestions < countedLines)
         {

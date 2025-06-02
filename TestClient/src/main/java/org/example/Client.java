@@ -4,7 +4,6 @@ import javafx.util.Pair;
 
 import java.rmi.RemoteException;
 import java.util.AbstractMap;
-import java.util.Scanner;
 
 public class Client {
     private User user;
@@ -40,15 +39,6 @@ public class Client {
         return currentQuestion;
     }
 
-    public void solveTest(AbstractMap.SimpleImmutableEntry<Integer, Integer> testPair) throws RemoteException {
-        Scanner scanner = new Scanner(System.in);
-        for (int i = 0; i < testPair.getValue(); i++) {
-            Question question = serviceClient.getTestQuestion(testPair.getKey(), i);
-            serviceClient.sendTestQuestion(testPair.getKey(), i, question.displayAndInput(scanner));
-        }
-        scanner.close();
-    }
-
     public boolean loginUser(String username, String password) {
         try {
             this.user = this.serviceClient.login(username, password);
@@ -70,16 +60,14 @@ public class Client {
         return result;
     }
 
-    public boolean logoutUser() {
+    public void logoutUser() {
         boolean result = false;
         try{
             result = this.serviceClient.logout(this.user.getName());
             this.user = null;
         } catch (RemoteException e) {
             e.printStackTrace();
-            result = false;
         }
-        return result;
     }
 
     public void createTest() {
@@ -99,6 +87,7 @@ public class Client {
     public void sendResponse(String answer){
         try {
             this.serviceClient.sendTestQuestion(this.testId, this.currentQuestion, answer);
+            this.currentQuestion++;
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -107,7 +96,6 @@ public class Client {
     public Question getNextQuestion(){
         try{
             Question q  = this.serviceClient.getTestQuestion(this.testId, this.currentQuestion);
-            this.currentQuestion++;
             return q;
         } catch (RemoteException e){
             e.printStackTrace();

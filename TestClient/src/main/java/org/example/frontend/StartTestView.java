@@ -2,28 +2,47 @@ package org.example.frontend;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import org.example.Client;
-
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 
 public class StartTestView extends VBox {
-
-    Button yesButton, noButton;
+    static class MyButton extends Button {
+        public MyButton(String text) {
+            super(text);
+            this.setFont(Font.font("Arial", 18));
+            this.setPrefSize(900, 50);
+            this.setCursor(javafx.scene.Cursor.HAND);
+        }
+    }
+    static class MyLabel extends Label {
+        public MyLabel(String text) {
+            super(text);
+            this.setFont(Font.font("Arial", 20));
+            this.setPrefSize(500, 40);
+            this.setPadding(new Insets(10));
+            this.setAlignment(javafx.geometry.Pos.CENTER);
+            this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+            this.setBorder(new Border(new BorderStroke(
+                    Color.LIGHTGRAY, BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(1)
+            )));
+        }
+    }
+    MyButton yesButton, noButton;
     Runnable yesButtonCallback, noButtonCallback;
 
-    public StartTestView(Stage stage) {
+    public StartTestView() {
         setPadding(new Insets(30));
-        setSpacing(10);
+        setSpacing(30);
 
-        Label confirmation = new Label("Do you really want to start test?");
-        yesButton = new Button("Yes");
+        MyLabel confirmation = new MyLabel("Do you really want to start test?");
+        yesButton = new MyButton("Yes");
         yesButton.setOnAction(e -> {
             yesButtonCallback.run();
         });
 
-        noButton = new Button("No");
+        noButton = new MyButton("No");
         noButton.setOnAction(e -> {
             noButtonCallback.run();
         });

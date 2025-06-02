@@ -4,9 +4,32 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class ScoringView extends VBox{
+    static class MyButton extends Button {
+        public MyButton(String text) {
+            super(text);
+            this.setFont(Font.font("Arial", 18));
+            this.setPrefSize(400, 50);
+            this.setCursor(javafx.scene.Cursor.HAND);
+        }
+    }
+    static class MyLabel extends Label {
+        public MyLabel(String text) {
+            super(text);
+            this.setFont(Font.font("Arial", 20));
+            this.setPrefSize(400, 40);
+            this.setPadding(new Insets(10));
+            this.setAlignment(javafx.geometry.Pos.CENTER);
+            this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+            this.setBorder(new Border(new BorderStroke(
+                    Color.LIGHTGRAY, BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(1)
+            )));
+        }
+    }
     private Runnable backToWelcome;
 
     public void setBackToWelcome(Runnable callback){
@@ -14,14 +37,17 @@ public class ScoringView extends VBox{
     }
 
     public ScoringView(Integer points, Integer maxPoints){
-        Label endLabel = new Label("Your score: " + points + " / " + maxPoints + " (" + (points * 100 / maxPoints) + "%)");
-        VBox endScreen = new VBox(endLabel);
-        Button backButton = new Button("End test");
+        this.setSpacing(30);
+        this.setPadding(new Insets(30));
+
+        MyLabel endLabel = new MyLabel("Your score: " + points + " / " + maxPoints + " (" + (points * 100 / maxPoints) + "%)");
+        MyButton backButton = new MyButton("End test");
         backButton.setOnAction(e -> {
             this.backToWelcome.run();
         });
-        endScreen.setAlignment(Pos.CENTER);
-        endScreen.setPadding(new Insets(20));
-        getChildren().add(endScreen);
+//        VBox endScreen = new VBox(endLabel, backButton);
+        this.setAlignment(Pos.CENTER);
+        this.setPadding(new Insets(20));
+        getChildren().addAll(endLabel, backButton);
     }
 }
