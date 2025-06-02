@@ -1,9 +1,6 @@
 package org.example;
 
 import javafx.util.Pair;
-import org.example.InterfaceRMI;
-import org.example.Question;
-import org.example.User;
 
 import java.rmi.RemoteException;
 import java.util.AbstractMap;
@@ -39,7 +36,7 @@ public class Client {
         return questionAmount;
     }
 
-    public int getCurrentQuestion() {
+    public int getCurrentQuestionNumber() {
         return currentQuestion;
     }
 
@@ -105,6 +102,31 @@ public class Client {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    public Question getNextQuestion(){
+        try{
+            Question q  = this.serviceClient.getTestQuestion(this.testId, this.currentQuestion);
+            this.currentQuestion++;
+            return q;
+        } catch (RemoteException e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public Pair<Integer, Integer> getScoring(){
+        try{
+            int score = this.serviceClient.receiveTestScore(this.testId);
+            int testLength = this.questionAmount;
+            this.isTestActive = false;
+            this.currentQuestion = 0;
+            return new Pair<Integer, Integer>(score, testLength);
+        } catch (RemoteException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

@@ -1,18 +1,57 @@
 package org.example;
 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.util.Pair;
 import org.example.frontend.*;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
 public class ClientMain extends Application {
     private static Client client;
-    private static Scene welcome;
-    private static Scene question;
+    private static Scene mainScene;
+
+    public void renderScoring(){
+        Pair<Integer, Integer> scoring = client.getScoring();
+        ScoringView scoringView = new ScoringView(scoring.getKey(), scoring.getValue());
+        scoringView.setBackToWelcome(() -> {
+
+        });
+        mainScene.setRoot(scoringView);
+        return;
+    }
+
+    public void renderQuestion() {
+        QuestionView questionView = new QuestionView(
+                client.getNextQuestion(),
+                client.getCurrentQuestionNumber(),
+                client.getQuestionAmount()
+        );
+
+        questionView.setResponseCallback(response -> {
+            client.sendResponse(response); // prawdopodobnie inkrementuje wewnętrzny licznik pytania
+            renderQuestion();              // wywołaj kolejne pytanie
+        });
+
+        if(client.getCurrentQuestionNumber() + 1 >= client.getQuestionAmount()) {
+            questionView.setResponseCallback(e -> {
+                renderScoring();
+                return;
+            });
+        }
+
+        mainScene.setRoot(questionView);
+    }
+
+
+    public void conductTest(Stage primaryStage) {
+        client.createTest();
+        renderQuestion();
+    }
+
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -23,41 +62,37 @@ public class ClientMain extends Application {
         EntryView entryView = new EntryView(primaryStage, client);
         WelcomeView welcomeView = new WelcomeView(primaryStage);
         StartTestView startTestView = new StartTestView(primaryStage);
-        QuestionView questionView = new QuestionView(primaryStage);
-
 
         //Scenes
-        Scene login = new Scene(loginView, 500, 300);
-        Scene register = new Scene(registerView, 500, 300);
-        Scene entry = new Scene(entryView, 500, 300);
-        welcome = new Scene(welcomeView, 500, 300);
-        Scene startTest = new Scene(startTestView, 500, 300);
-
+        mainScene = new Scene(entryView, 500, 500);
 
         // Callbacks
-        entryView.setOnLogin(() -> primaryStage.setScene(login));
-        entryView.setOnRegister(() -> primaryStage.setScene(register));
+        entryView.setOnLogin(() -> {
+            loginView.refresh();
+            mainScene.setRoot(loginView);
+        });
+        entryView.setOnRegister(() -> {
+            registerView.refresh();
+            mainScene.setRoot(registerView);
+        });
 
         loginView.setOnLoginSuccess(() -> {
             welcomeView.refresh(client);
-            primaryStage.setScene(welcome);
+            mainScene.setRoot(welcomeView);
         });
+        loginView.setOnBackPressed(() -> mainScene.setRoot(entryView));
 
-        loginView.setOnBackPressed(() -> primaryStage.setScene(entry));
-        registerView.setOnBackPressed(() -> primaryStage.setScene(entry));
-        welcomeView.setLogout(() -> primaryStage.setScene(entry));
-        welcomeView.setStartTest(() -> primaryStage.setScene(startTest));
-        startTestView.setYesButtonCallback(() -> {
+        registerView.setOnBackPressed(() -> mainScene.setRoot(entryView));
 
-        });
-        startTestView.setNoButtonCallback(() -> {
+        welcomeView.setLogout(() -> mainScene.setRoot(entryView));
+        welcomeView.setStartTest(() -> mainScene.setRoot(startTestView));
 
-        });
-
+        startTestView.setYesButtonCallback(() -> conductTest(primaryStage));
+        startTestView.setNoButtonCallback(() -> mainScene.setRoot(welcomeView));
 
 
         primaryStage.setTitle("RMI Testing App");
-        primaryStage.setScene(entry);
+        primaryStage.setScene(mainScene);
         primaryStage.show();
     }
 
@@ -68,7 +103,6 @@ public class ClientMain extends Application {
             client = new Client(null, server);
 
             launch(args);
-
 
         } catch (Exception e) {
             e.printStackTrace();

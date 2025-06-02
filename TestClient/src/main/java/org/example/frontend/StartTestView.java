@@ -28,6 +28,8 @@ public class StartTestView extends VBox {
             noButtonCallback.run();
         });
 
+        getChildren().addAll(confirmation, yesButton, noButton);
+
     }
     public void setYesButtonCallback(Runnable callback) {
         yesButtonCallback = callback;
