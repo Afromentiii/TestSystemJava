@@ -11,27 +11,29 @@ import javafx.stage.Stage;
 public class RegisterView extends VBox {
 
     private Runnable onBackPressed;
+    private TextField usernameField, emailField, passwordField, passwordMatchField, firstNameField, lastNameField;
+
 
     public RegisterView(Stage stage, Client client) {
         setPadding(new Insets(10));
         setSpacing(10);
 
-        TextField usernameField = new TextField();
+        usernameField = new TextField();
         usernameField.setPromptText("Username");
 
-        TextField emailField = new TextField();
+        emailField = new TextField();
         emailField.setPromptText("E-mail");
 
-        PasswordField passwordField = new PasswordField();
+         passwordField = new PasswordField();
         passwordField.setPromptText("Password");
 
-        PasswordField passwordMatchField = new PasswordField();
+         passwordMatchField = new PasswordField();
         passwordMatchField.setPromptText("Confirm your password");
 
-        TextField firstNameField = new TextField();
+         firstNameField = new TextField();
         firstNameField.setPromptText("First Name");
 
-        TextField lastNameField = new TextField();
+        lastNameField = new TextField();
         lastNameField.setPromptText("Last Name");
 
         Label statusLabel = new Label();
@@ -58,6 +60,15 @@ public class RegisterView extends VBox {
             this.onBackPressed.run();
         });
         getChildren().addAll(statusLabel, usernameField,  passwordField, passwordMatchField, firstNameField, lastNameField, emailField, registerButton, backButton);
+    }
+
+    public void refresh() {
+        this.usernameField.clear();
+        this.passwordField.clear();
+        this.passwordMatchField.clear();
+        this.firstNameField.clear();
+        this.lastNameField.clear();
+        this.emailField.clear();
     }
 
     public void setOnBackPressed(Runnable onBackPressed) {

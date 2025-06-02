@@ -5,46 +5,38 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import org.example.Client;
 import org.example.Question;
 
+import java.util.function.Consumer;
+
 public class QuestionView extends VBox {
-    private Client client;
-    private Label title, ask;
-    private RadioButton answer1, answer2, answer3;
-    private Button submit;
-    private ToggleGroup group;
-    private Runnable submitCallback;
+
+    private ToggleGroup group = new ToggleGroup();
+    private Consumer<String> responseCallback;
 
 
-    public QuestionView(Stage stage) {
-        title = new Label();
-        ask = new Label();
-        answer1= new RadioButton();
-        answer2 = new RadioButton();
-        answer3 = new RadioButton();
+    public QuestionView(Question question, int questionID, int testLength) {
+        Label title = new Label("Question " + (questionID ) + " / " + (testLength));
+        Label ask = new Label(question.getQuestion());
+
+        RadioButton answer1 = new RadioButton(question.getAnswerA());
+        answer1.setUserData(question.getAnswerA());
+        RadioButton answer2 = new RadioButton(question.getAnswerB());
+        answer2.setUserData(question.getAnswerB());
+        RadioButton answer3 = new RadioButton(question.getAnswerC());
+        answer3.setUserData(question.getAnswerC());
         answer1.setToggleGroup(group);
         answer2.setToggleGroup(group);
         answer3.setToggleGroup(group);
-        submit = new Button("Submit");
+        Button submit = new Button("Submit");
+
+        submit.setOnAction(e -> this.responseCallback.accept(group.getSelectedToggle().getUserData().toString()));
+
+        getChildren().addAll(title, ask, answer1, answer2, answer3, submit);
     }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public void render(Question question) {
-        this.title.setText("Question " + (this.client.getCurrentQuestion() + 1) + " / " + (this.client.getQuestionAmount() + 1));
-        this.ask.setText(question.getQuestion());
-        this.answer1.setText(question.getAnswerA());
-        this.answer2.setText(question.getAnswerB());
-        this.answer3.setText(question.getAnswerC());
-        this.submit.setOnAction(e -> {
-
-            this.client.sendResponse();
-            this.submitCallback.run();
-        });
+    public void setResponseCallback(Consumer<String> callback) {
+        this.responseCallback = callback;
     }
 
 }

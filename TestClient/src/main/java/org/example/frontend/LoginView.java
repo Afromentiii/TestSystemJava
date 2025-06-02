@@ -14,15 +14,17 @@ public class LoginView extends VBox {
     private Button loginButton = new Button("Login");
     private Runnable onLoginSuccess;
     private Runnable onBackPressed;
+    private PasswordField passwordField;
+    private TextField usernameField;
 
-    public LoginView(Stage stage, Client client) {
+    public LoginView(Client client) {
         setPadding(new Insets(10));
         setSpacing(10);
 
-        TextField usernameField = new TextField();
+        usernameField = new TextField();
         usernameField.setPromptText("Username");
 
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
         passwordField.setPromptText("Password");
 
         Label statusLabel = new Label();
@@ -41,6 +43,11 @@ public class LoginView extends VBox {
         });
 
         getChildren().addAll(statusLabel, usernameField, passwordField, loginButton, backButton);
+    }
+
+    public void refresh() {
+        this.passwordField.clear();
+        this.usernameField.clear();
     }
 
     public void setOnLoginSuccess(Runnable callback) {
