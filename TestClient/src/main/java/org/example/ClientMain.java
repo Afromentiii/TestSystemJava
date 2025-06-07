@@ -16,6 +16,13 @@ public class ClientMain extends Application {
     private final EntryView entryView = new EntryView();
     private WelcomeView welcomeView;
 
+    public void renderResultsView(){
+        ResultsView resultsView = new ResultsView(client.getResults());
+        resultsView.setBackToWelcome(() -> mainScene.setRoot(welcomeView));
+        mainScene.setRoot(resultsView);
+
+    }
+
     public void renderScoring(){
         Pair<Integer, Integer> scoring = client.getScoring();
         ScoringView scoringView = new ScoringView(scoring.getKey(), scoring.getValue());
@@ -66,6 +73,7 @@ public class ClientMain extends Application {
             mainScene.setRoot(entryView);
         });
         welcomeView.setStartTest(this::renderStartTestView);
+        welcomeView.setShowResults(this::renderResultsView);
         mainScene.setRoot(welcomeView);
     }
 

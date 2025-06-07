@@ -11,6 +11,7 @@ import org.example.Client;
 public class WelcomeView extends VBox {
     private Runnable logout;
     private Runnable startTest;
+    private Runnable showResults;
     private Client client;
 
     static class MyButton extends Button {
@@ -46,7 +47,11 @@ public class WelcomeView extends VBox {
 
         MyButton startTestButton = new MyButton("Start test!");
         startTestButton.setOnAction(e -> this.startTest.run());
-        getChildren().addAll(title, startTestButton, logoutButton);
+
+        MyButton showResultsButton = new MyButton("Show results");
+        showResultsButton.setOnAction(e -> this.showResults.run());
+
+        getChildren().addAll(title, startTestButton, showResultsButton, logoutButton);
     }
 
     public void setLogout(Runnable logout){
@@ -56,5 +61,7 @@ public class WelcomeView extends VBox {
     public void setStartTest(Runnable startTest){
         this.startTest = startTest;
     }
+
+    public void setShowResults(Runnable showResults){this.showResults = showResults;}
 
 }
