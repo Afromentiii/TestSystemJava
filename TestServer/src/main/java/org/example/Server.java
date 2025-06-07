@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Server extends UnicastRemoteObject implements InterfaceRMI
@@ -174,5 +175,15 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
             return true;
         }
         return false;
+    }
+
+    public synchronized List<Result> getUsersResults(User user) throws RemoteException{
+        //TODO
+        List<Result> results = new ArrayList<>();
+        results.add(new Result(0, LocalDateTime.now(), 10, 5, 50));
+        results.add(new Result(0, LocalDateTime.now(), 10, 5, 50));
+        results.add(new Result(0, LocalDateTime.now(), 10, 5, 50));
+        results.add(new Result(0, LocalDateTime.now(), 10, 5, 50));
+        return results;
     }
 }
