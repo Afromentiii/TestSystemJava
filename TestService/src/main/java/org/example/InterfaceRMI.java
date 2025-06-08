@@ -17,5 +17,5 @@ public interface InterfaceRMI extends Remote
     Integer receiveTestScore(Integer testID) throws RemoteException;
     Question getTestQuestion(Integer testID, Integer questionID) throws RemoteException;
     boolean sendTestQuestion(Integer testID, Integer questionID, String answer) throws RemoteException;
-    List<Result> getUsersResults(User user) throws RemoteException;
+    List<Result> getUsersResults(String username) throws RemoteException;
 }

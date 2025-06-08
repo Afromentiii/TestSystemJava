@@ -120,7 +120,7 @@ public class Client {
 
     public List<Result> getResults() {
         try {
-            return this.serviceClient.getUsersResults(this.user);
+            return this.serviceClient.getUsersResults(this.user.getName());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
