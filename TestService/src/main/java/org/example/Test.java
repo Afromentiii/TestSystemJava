@@ -1,6 +1,8 @@
 package org.example;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,6 +14,7 @@ public class Test implements Serializable
     private final long testMaxTime;
     private boolean testEnabled;
     private int testScore;
+    private LocalDateTime date;
 
     public Test(List<Question> questions, int id, long testMaxTime)
     {
@@ -99,5 +102,26 @@ public class Test implements Serializable
     public void setUser(User user)
     {
         this.user = user;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Test{" +
+                ", id=" + id +
+                ", questions=" + questions +
+                ", testMaxTime=" + testMaxTime +
+                ", testEnabled=" + testEnabled +
+                ", testScore=" + testScore +
+                '}';
+    }
+
+    public void setDate(LocalDateTime date)
+    {
+        this.date = date;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
     }
 }
