@@ -48,9 +48,9 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
 
     private void saveStringToFile(String content, String filePath)
     {
-        try (FileWriter writer = new FileWriter(filePath))
+        try (FileWriter writer = new FileWriter(filePath, true))
         {
-            writer.write(content);
+            writer.write(content + System.lineSeparator());
             System.out.println("Zapisano do pliku: " + filePath);
         }
         catch (IOException e)
