@@ -5,6 +5,7 @@ import javafx.util.Pair;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.AbstractMap;
+import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
 
 public interface InterfaceRMI extends Remote
@@ -16,4 +17,5 @@ public interface InterfaceRMI extends Remote
     Integer receiveTestScore(Integer testID) throws RemoteException;
     Question getTestQuestion(Integer testID, Integer questionID) throws RemoteException;
     boolean sendTestQuestion(Integer testID, Integer questionID, String answer) throws RemoteException;
+    List<Result> getUsersResults(String username) throws RemoteException;
 }

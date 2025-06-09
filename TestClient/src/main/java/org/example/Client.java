@@ -4,6 +4,7 @@ import javafx.util.Pair;
 
 import java.rmi.RemoteException;
 import java.util.AbstractMap;
+import java.util.List;
 
 public class Client {
     private User user;
@@ -117,4 +118,12 @@ public class Client {
         return null;
     }
 
+    public List<Result> getResults() {
+        try {
+            return this.serviceClient.getUsersResults(this.user.getName());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

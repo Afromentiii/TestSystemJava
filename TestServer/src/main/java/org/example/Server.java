@@ -8,9 +8,11 @@ import org.example.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Server extends UnicastRemoteObject implements InterfaceRMI
@@ -42,6 +44,19 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
         questionsMainFilePath = "pytania.txt";
         testID = 0;
         testsMap =  new HashMap<Integer, Test>();
+    }
+
+    private void saveStringToFile(String content, String filePath)
+    {
+        try (FileWriter writer = new FileWriter(filePath, true))
+        {
+            writer.write(content + System.lineSeparator());
+            System.out.println("Zapisano do pliku: " + filePath);
+        }
+        catch (IOException e)
+        {
+            System.err.println("Wystąpił błąd podczas zapisu do pliku: " + e.getMessage());
+        }
     }
 
     private int countLines()
@@ -129,6 +144,11 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
                 serverConsole.printLog(header, question.toString());
             }
             Integer currentTestID = testID;
+            User user = usersMap.get(clientUser.getName());
+            if (user != null)
+            {
+                user.getTestsID().add(currentTestID);
+            }
             testID++;
             return new AbstractMap.SimpleImmutableEntry<>(currentTestID, howManyQuestions);
         }
@@ -147,6 +167,10 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
                 question.checkAnswer();
                 totalPoints += question.getPoint();
             }
+            test.setTestScore(totalPoints);
+            LocalDateTime date = LocalDateTime.now();
+            test.setDate(date);
+            saveStringToFile(test.toString(), "testy.txt");
             return totalPoints;
         }
         return notFound;
@@ -174,5 +198,26 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
             return true;
         }
         return false;
+    }
+
+    public synchronized List<Result> getUsersResults(String username) throws RemoteException
+    {
+        User foundUser = usersMap.get(username);
+        if (foundUser != null)
+        {
+            List<Result> results = new ArrayList<>();
+            for (int i = 0; i < foundUser.getTestsID().size(); i++)
+            {
+                Test test = testsMap.get(i);
+                int testID = test.getId();
+                int questionCount = test.getQuestions().size();
+                int correctAnswerCount = test.getTestScore();
+                int correctnessPercentage = correctAnswerCount / questionCount;
+                LocalDateTime date = test.getDate();
+                results.add(new Result(testID, date, questionCount, correctAnswerCount, correctnessPercentage));
+            }
+            return results;
+        }
+        return  null;
     }
 }
