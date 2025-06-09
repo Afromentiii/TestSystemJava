@@ -43,6 +43,13 @@ Klasa Question reprezentuje pytanie. Posiada metodę loadQuestions(), która wcz
 - private String userAnswer;
 - private int point;
 
+Klasa Result reprezentuje wynik testu, który wyświetlany jest w panelu Results Klienta. Posiada pola takie jak:
+- private int testId;
+- private LocalDateTime sentAt;
+- private int questionCount;
+- private int correctAnswerCount;
+- private double correctnessPercentage;
+
 ## Opis specyficznych metod rozwiązania problemu, takich jak metoda wykorzystana do
 rozwiązania konkretnego aspektu.
 
