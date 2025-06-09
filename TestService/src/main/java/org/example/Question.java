@@ -39,6 +39,8 @@ public class Question implements Serializable
                 ", answerB='" + answerB + '\'' +
                 ", answerC='" + answerC + '\'' +
                 ", correctAnswer='" + correctAnswer + '\'' +
+                ", userAnswer=" + userAnswer +
+                ", point=" + point +
                 '}';
     }
 

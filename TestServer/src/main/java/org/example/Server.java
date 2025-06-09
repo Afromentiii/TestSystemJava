@@ -136,7 +136,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
         if (countedLines != notFound && howManyQuestions < countedLines)
         {
             List<Question> questions = Question.loadQuestions(questionsMainFilePath, howManyQuestions);
-            Test test = new Test(questions, testID,6000);
+            Test test = new Test(questions, testID);
             test.setUser(clientUser);
             testsMap.put(testID, test);
             for (Question question : test.getQuestions())
@@ -212,7 +212,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
                 int testID = test.getId();
                 int questionCount = test.getQuestions().size();
                 int correctAnswerCount = test.getTestScore();
-                int correctnessPercentage = correctAnswerCount / questionCount;
+                double correctnessPercentage = ((double) correctAnswerCount / questionCount) * 100;
                 LocalDateTime date = test.getDate();
                 results.add(new Result(testID, date, questionCount, correctAnswerCount, correctnessPercentage));
             }
