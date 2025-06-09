@@ -9,7 +9,10 @@ Wspólnie: ustalenie API, przygotowanie i implementacja modułu `TestService`, p
 Celem projektu jest przygotowanie rozwiązania umożliwiającego zdalne przeprowadzanie zamkniętych testów jednokrotnego wyboru, a także podgląd wyników użytkowników i przechowywanie odpowiedzi. 
 
 ## Opis i schemat struktury logicznej aplikacji.
-
+![Opis alternatywny](sekwencje_logika_testu.png)
+Przeprowadzenie testu polega na tym, że:
+- Klient po zalogowaniu wybiera opcje rozpoczęcia testu.
+- Po zaakceptowaniu, Klient otrzymuje od serwera parę <CurrentcurrentTestID, howManyQuestions>, a serwer po swojej stronie tworzy test, któremu przypisuje obiekt użytkownika oraz dodaje test do mapy <testID, test>. Ponadto serwer dodaje testID do listy testsID zamieszczonej u użytkownika.
 ## Informacje o wykorzystanych klasach niestandardowych.
 
 ## Opis specyficznych metod rozwiązania problemu, takich jak metoda wykorzystana do
