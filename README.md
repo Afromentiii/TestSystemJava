@@ -50,6 +50,18 @@ Klasa Result reprezentuje wynik testu, który wyświetlany jest w panelu Results
 - private int correctAnswerCount;
 - private double correctnessPercentage;
 
+Klasa Server posiada funkcje RMI takie jak:
+- User login(String username, String password) throws RemoteException;
+- Pair<Boolean, String> register(String username, String password, String email, String firstName, String surname) throws RemoteException;
+- boolean logout(String username) throws RemoteException;
+- AbstractMap.SimpleImmutableEntry<Integer, Integer> createTest(User user) throws RemoteException;
+- Integer receiveTestScore(Integer testID) throws RemoteException;
+- Question getTestQuestion(Integer testID, Integer questionID) throws RemoteException;
+- boolean sendTestQuestion(Integer testID, Integer questionID, String answer) throws RemoteException;
+- List<Result> getUsersResults(String username) throws RemoteException;
+
+Klasa Console wykorzystywana jest po stronie Servera do wyświetlenia logów. Posiada tylko jedną metodę void printLog(String header, String message).
+
 ## Opis specyficznych metod rozwiązania problemu, takich jak metoda wykorzystana do
 rozwiązania konkretnego aspektu.
 
