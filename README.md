@@ -1,52 +1,34 @@
-# W jaki sposób piszemy zmienne i funkcje.
-Używamy CamelCase.
+# Dokumentacja projektu pt. `RMI Testing App`
+## Dane autorów i ich wkład w poszczególne części projektu.
+1. Jakub Krać (serwer)
+2. Filip Uliasz (klient)
 
-# Bibloteki.
-JavaFX,
-Tui.
+Wspólnie: ustalenie API, przygotowanie i implementacja modułu `TestService`, przygotowanie dokumentacji.
 
-# Must have.
-Web Panel | Konsola, 
-Baza danych, 
-RMI.
+## Krótki opis celu programu.
+Celem projektu jest przygotowanie rozwiązania umożliwiającego zdalne przeprowadzanie zamkniętych testów jednokrotnego wyboru, a także podgląd wyników użytkowników i przechowywanie odpowiedzi. 
 
-# Server.
-Baza danych,
-Prosty webpanel.
+## Opis i schemat struktury logicznej aplikacji.
 
-# 📚 Funkcje udostępniane przez RMI
+## Informacje o wykorzystanych klasach niestandardowych.
 
-## 🔐 Autoryzacja
+## Opis specyficznych metod rozwiązania problemu, takich jak metoda wykorzystana do
+rozwiązania konkretnego aspektu.
 
-### `User login(String username, String password) throws RemoteException`
-- Bazuje na prywatnej mapie, gdzie kluczem jest pseudonim, a wartością obiekt `User`.
-- Pozwala zalogować się istniejącemu użytkownikowi, o ile **nie jest zalogowany**.
+## Krótka instrukcja obsługi.
+1. Zainstalować zależności Maven
+2. Uruchomić `Server`
+3. Uruchomić `Client`
+4. Zarejestrować nowego użytkownika
+5. Zalogować nowego użytkownika
+6. Uruchomić nowy test: `Start Test!` > `Yes` > rozwiązać test. 
+7. Podejrzeć wyniki: `Show results`. 
+8. Wylogować użytkownika. 
 
-### `String register(String username, String password, String email, String firstName, String surname) throws RemoteException`
-- Tworzy użytkownika i dodaje go do mapy, o ile **nie istnieje taki `username`**.
+## Ograniczenia programu, np. maksymalna liczba obsługiwanych klientów.
+1. Podglądanie wyników jest możliwe jedynie dla tych testów, które zostały wykonane od czasu ostatniego restartu serwera. \
+Nie jest możliwe poznanie (z perspektywy użytkownika) wyników testów wykonanych wcześniej, mimo, że rezultaty zapisują się do pliku na serwerze. 
+2. System wyklucza możliwość zalogowania danego użytkownika z więcej niż jednej instancji aplikacji klienckiej. Oznacza to także, że niepoprawne 
+wylogowanie (np. przez zamknięcie okna z aktywnym testem) spowoduje brak możliwości ponownego zalogowania się.
 
-### `boolean logout(User loggedUser) throws RemoteException`
-- Przyjmuje od klienta obiekt `User` i wylogowuje go, ustawiając zmienną `setLoggedIn` na `false`.
-
----
-
-## 🧪 Obsługa testów
-
-### `Test createTest(int howManyQuestions) throws RemoteException`
-- Tworzy i zwraca test na podstawie pytań utworzonych przez klasę `Question`.
-- Pytania są wczytywane z pliku `pytania.txt`.
-
-### `int receiveTestScore(Test test) throws RemoteException`
-- Przyjmuje test, sprawdza go i zwraca wynik.
-- Zapisuje wynik do listy testów.
-
----
-
-## 🖥️ Informacje dodatkowe
-
-- Serwer posiada swoją konsolę (klasa: `Console`), która wyświetla komunikaty w konsoli.
-- Można dodać np. frontend po stronie serwera, żeby miał okienkowy podgląd.
-- Przydałoby się zrobić np. **statystyki danego użytkownika**, **podgląd wykonanych testów** itp.
-- Na razie została utworzona **tymczasowa funkcja do przeprowadzenia testu**.
-
----
+• Inne istotne informacje związane z tematem projektu
