@@ -12,7 +12,7 @@ Celem projektu jest przygotowanie rozwiązania umożliwiającego zdalne przeprow
 ![Opis alternatywny](sekwencje_logika_testu.png)
 Przeprowadzenie testu polega na tym, że:
 - Klient po zalogowaniu wybiera opcje rozpoczęcia testu.
-- Po zaakceptowaniu, Klient wywołuję metodę createTest(User clientUser) po stronie serwera, która zwraca parę <CurrentcurrentTestID, howManyQuestions>. Serwer po swojej stronie tworzy test, któremu przypisuje obiekt użytkownika oraz dodaje test do mapy <testID, test>. Ponadto serwer dodaje testID do listy testsID zamieszczonej u użytkownika.
+- Po zaakceptowaniu, Klient wywołuję metodę createTest(User clientUser) po stronie serwera, która zwraca parę <currentTestID, howManyQuestions>. Serwer po swojej stronie tworzy test, któremu przypisuje obiekt użytkownika oraz dodaje test do mapy <testID, test>. Ponadto serwer dodaje testID do listy testsID zamieszczonej u użytkownika.
 - Potem w pętli Klient wywołuje metodę getTestQuestion(Integer testID, Integer questionID)  po stronie serwera, która zwraca odpowiednią kopię obiektu Klasy Question.
 - Po otrzymaniu pytania i wybraniu odpowiedzi, Klient wywołuje metodę sendTestQuestion(Integer testID, Integer questionID, String answer), która zwraca true. Serwer ustawia dla odpowiedniego testu i pytania odpowiedź.
 - Po zakończeniu testu, Klient wywołuje metodę receiveTestScore(Integer testID), która zwraca liczbę otrzymanych punktów. Serwer ustawia dla odpowiedniego testu datę oraz wynik.
