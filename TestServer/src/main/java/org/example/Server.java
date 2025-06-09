@@ -206,15 +206,16 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
         if (foundUser != null)
         {
             List<Result> results = new ArrayList<>();
-            for (int i = 0; i < foundUser.getTestsID().size(); i++)
+            for (Integer testID : foundUser.getTestsID())
             {
-                Test test = testsMap.get(i);
-                int testID = test.getId();
+                Test test = testsMap.get(testID);
                 int questionCount = test.getQuestions().size();
                 int correctAnswerCount = test.getTestScore();
                 double correctnessPercentage = ((double) correctAnswerCount / questionCount) * 100;
                 LocalDateTime date = test.getDate();
-                results.add(new Result(testID, date, questionCount, correctAnswerCount, correctnessPercentage));
+                Result result = new Result(testID, date, questionCount, correctAnswerCount, correctnessPercentage);
+                System.out.println(result.toString());
+                results.add(result);
             }
             return results;
         }

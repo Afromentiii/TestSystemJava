@@ -38,4 +38,17 @@ public class Result implements Serializable {
     public double getCorrectnessPercentage() {
         return correctnessPercentage;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Result{" +
+                "testId=" + testId +
+                ", sentAt=" + sentAt +
+                ", questionCount=" + questionCount +
+                ", correctAnswerCount=" + correctAnswerCount +
+                ", correctnessPercentage=" + correctnessPercentage +
+                '}';
+    }
+
 }
