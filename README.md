@@ -60,6 +60,7 @@ Klasa `Server` posiada funkcje RMI takie jak:
 - `Question getTestQuestion(Integer testID, Integer questionID) throws RemoteException` - zwraca odpowiednie pytanie;
 - `boolean sendTestQuestion(Integer testID, Integer questionID, String answer) throws RemoteException` - wysyła pytanie do odpowiedniego testu;
 - `List<Result> getUsersResults(String username) throws RemoteException` - zwraca listę rozwiązanych testów dla konkretnego użytkownika;
+
 Z kolei pola klasy `Server` to:
 - `private final String header;`
 - `private final Map<String, User> usersMap;`
