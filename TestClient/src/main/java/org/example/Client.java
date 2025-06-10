@@ -102,7 +102,6 @@ public class Client {
             e.printStackTrace();
             return null;
         }
-
     }
 
     public Pair<Integer, Integer> getScoring(){
