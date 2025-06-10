@@ -74,7 +74,7 @@ Klasa Client reprezentuje logikę działania aplikacji klienckiej. Przechowuje r
 - Logika opiera się na renderowaniu widoków i przypisywaniu przyciskom akcji
 
 #### 🛠️ Przechowywanie wyników testów na serwerze w formacie JSON-like. 
-```json lines
+```
 Test{
     id=0, 
     username=aaaa, 
