@@ -65,11 +65,41 @@ Klasa Console wykorzystywana jest po stronie Servera do wyświetlenia logów. Po
 
 Klasa ClientMain odpowiada za obsługę logiki aplikacji klienckiej. Przechowuje instancję klasy Client.
 
-Klasa Client reprezentuje logikę działania aplikacji klienckiej. 
+Klasa Client reprezentuje logikę działania aplikacji klienckiej. Przechowuje referencję do klasy `Server` oraz klasy `User`, które wykorzystuje w komunikacji z serwerem.
 
 ## Opis specyficznych metod rozwiązania problemu, takich jak metoda wykorzystana do rozwiązania konkretnego aspektu.
+#### JavaFX
+- Biblioteka do pisania prostych natywnych GUI (nie webowych)
+- Wydana na licencji open-source
+- Logika opiera się na renderowaniu widoków i przypisywaniu przyciskom akcji
 
-
+#### Przechowywanie wyników testów na serwerze w formacie JSON-like. 
+```json lines
+Test{
+    id=0, 
+    username=aaaa, 
+    questions=[
+        Question{
+            question='Jak nazywa się stolica Polski?', 
+            answerA='Warszawa', 
+            answerB='Kraków', 
+            answerC='Gdańsk', 
+            correctAnswer='Warszawa', 
+            userAnswer=Kraków, point=0
+        }, Question{
+            question='Ile wynosi pierwiastek kwadratowy z 64?', 
+            answerA='8', 
+            answerB='6', 
+            answerC='7', 
+            correctAnswer='8', 
+            userAnswer=6, 
+            point=0
+            }{...} 
+            testEnabled=true, 
+            testScore=0
+    }
+```
+    
 ## Krótka instrukcja obsługi.
 1. Zainstalować zależności Maven
 2. Uruchomić `Server`
