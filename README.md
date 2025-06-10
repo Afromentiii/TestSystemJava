@@ -52,14 +52,22 @@ Klasa `Result` reprezentuje wynik testu, który wyświetlany jest w panelu Resul
 - `private double correctnessPercentage`;
 
 Klasa `Server` posiada funkcje RMI takie jak:
-- `User login(String username, String password) throws RemoteException`;
-- `Pair<Boolean, String> register(String username, String password, String email, String firstName, String surname) throws RemoteException`;
-- `boolean logout(String username) throws RemoteException`;
-- `AbstractMap.SimpleImmutableEntry<Integer, Integer> createTest(User user) throws RemoteException`;
-- `Integer receiveTestScore(Integer testID) throws RemoteException`;
-- `Question getTestQuestion(Integer testID, Integer questionID) throws RemoteException`;
-- `boolean sendTestQuestion(Integer testID, Integer questionID, String answer) throws RemoteException`;
-- `List<Result> getUsersResults(String username) throws RemoteException`;
+- `User login(String username, String password) throws RemoteException` - służy do zalogowania użytkownika.
+- `Pair<Boolean, String> register(String username, String password, String email, String firstName, String surname) throws RemoteException` - tworzy użytkownika po stronie serwera, dodając go do mapy;
+- `boolean logout(String username) throws RemoteException` - służy do wylogowania użytkownia;
+- `AbstractMap.SimpleImmutableEntry<Integer, Integer> createTest(User user) throws RemoteException` - tworzy test;
+- `Integer receiveTestScore(Integer testID) throws RemoteException` - zwraca ilość punktów przesłanego `testID`;
+- `Question getTestQuestion(Integer testID, Integer questionID) throws RemoteException` - zwraca odpowiednie pytanie;
+- `boolean sendTestQuestion(Integer testID, Integer questionID, String answer) throws RemoteException` - wysyła pytanie do odpowiedniego testu;
+- `List<Result> getUsersResults(String username) throws RemoteException` - zwraca listę rozwiązanych testów dla konkretnego użytkownika;
+Z kolei pola klasy `Server` to:
+- `private final String header;`
+- `private final Map<String, User> usersMap;`
+- `private final Console serverConsole;`
+- `private final int notFound = -1;`
+- `private final String questionsMainFilePath;`
+- `private static int testID;`
+- `private final Map<Integer, Test> testsMap;`
 
 Klasa `Console` wykorzystywana jest po stronie Servera do wyświetlenia logów. Posiada tylko jedną metodę `void printLog(String header, String message)`.
 
