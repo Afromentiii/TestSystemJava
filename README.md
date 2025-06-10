@@ -16,6 +16,7 @@ Przeprowadzenie testu polega na tym, że:
 - Potem w pętli Klient wywołuje metodę getTestQuestion(Integer testID, Integer questionID)  po stronie serwera, która zwraca odpowiednią kopię obiektu Klasy Question.
 - Po otrzymaniu pytania i wybraniu odpowiedzi, Klient wywołuje metodę sendTestQuestion(Integer testID, Integer questionID, String answer), która zwraca true. Serwer ustawia dla odpowiedniego testu i pytania odpowiedź.
 - Po zakończeniu testu, Klient wywołuje metodę receiveTestScore(Integer testID), która zwraca liczbę otrzymanych punktów. Serwer ustawia dla odpowiedniego testu datę oraz wynik.
+
 ## Informacje o wykorzystanych klasach niestandardowych.
 Klasa User reprezentuje użytkownika, posiada pola takie jak:
 - private String name;
@@ -62,8 +63,12 @@ Klasa Server posiada funkcje RMI takie jak:
 
 Klasa Console wykorzystywana jest po stronie Servera do wyświetlenia logów. Posiada tylko jedną metodę void printLog(String header, String message).
 
-## Opis specyficznych metod rozwiązania problemu, takich jak metoda wykorzystana do
-rozwiązania konkretnego aspektu.
+Klasa ClientMain odpowiada za obsługę logiki aplikacji klienckiej. Przechowuje instancję klasy Client.
+
+Klasa Client reprezentuje logikę działania aplikacji klienckiej. 
+
+## Opis specyficznych metod rozwiązania problemu, takich jak metoda wykorzystana do rozwiązania konkretnego aspektu.
+
 
 ## Krótka instrukcja obsługi.
 1. Zainstalować zależności Maven
@@ -80,3 +85,6 @@ rozwiązania konkretnego aspektu.
 Nie jest możliwe poznanie (z perspektywy użytkownika) wyników testów wykonanych wcześniej, mimo, że rezultaty zapisują się do pliku na serwerze. 
 2. System wyklucza możliwość zalogowania danego użytkownika z więcej niż jednej instancji aplikacji klienckiej. Oznacza to także, że niepoprawne 
 wylogowanie (np. przez zamknięcie okna z aktywnym testem) spowoduje brak możliwości ponownego zalogowania się.
+3. W ciągu dalszego rozwoju aplikacji należałoby:
+- Dodać logikę generowania losowości pytań
+- Wprowadzić obsługę limitu czasu na odpowiedź na pytanie po stronie klienta.
