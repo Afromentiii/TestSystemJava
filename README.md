@@ -1,14 +1,14 @@
 # Dokumentacja projektu pt. `RMI Testing App`
-## Dane autorów i ich wkład w poszczególne części projektu.
+## 👨‍💻 Dane autorów i ich wkład w poszczególne części projektu.
 1. Jakub Krać (serwer)
 2. Filip Uliasz (klient)
 
 Wspólnie: ustalenie API, przygotowanie i implementacja modułu `TestService`, przygotowanie dokumentacji.
 
-## Krótki opis celu programu.
+## 📖 Krótki opis celu programu.
 Celem projektu jest przygotowanie rozwiązania umożliwiającego zdalne przeprowadzanie zamkniętych testów jednokrotnego wyboru, a także podgląd wyników użytkowników i przechowywanie odpowiedzi. 
 
-## Opis i schemat struktury logicznej aplikacji.
+## 📖 Opis i schemat struktury logicznej aplikacji.
 ![Opis alternatywny](sekwencje_logika_testu.png)
 Przeprowadzenie testu polega na tym, że:
 - Klient po zalogowaniu wybiera opcje rozpoczęcia testu.
@@ -17,7 +17,7 @@ Przeprowadzenie testu polega na tym, że:
 - Po otrzymaniu pytania i wybraniu odpowiedzi, Klient wywołuje metodę sendTestQuestion(Integer testID, Integer questionID, String answer), która zwraca true. Serwer ustawia dla odpowiedniego testu i pytania odpowiedź.
 - Po zakończeniu testu, Klient wywołuje metodę receiveTestScore(Integer testID), która zwraca liczbę otrzymanych punktów. Serwer ustawia dla odpowiedniego testu datę oraz wynik.
 
-## Informacje o wykorzystanych klasach niestandardowych.
+## 📂 Informacje o wykorzystanych klasach niestandardowych.
 Klasa User reprezentuje użytkownika, posiada pola takie jak:
 - private String name;
 - private String email;
@@ -67,13 +67,13 @@ Klasa ClientMain odpowiada za obsługę logiki aplikacji klienckiej. Przechowuje
 
 Klasa Client reprezentuje logikę działania aplikacji klienckiej. Przechowuje referencję do klasy `Server` oraz klasy `User`, które wykorzystuje w komunikacji z serwerem.
 
-## Opis specyficznych metod rozwiązania problemu, takich jak metoda wykorzystana do rozwiązania konkretnego aspektu.
+## 📖 Opis specyficznych metod rozwiązania problemu, takich jak metoda wykorzystana do rozwiązania konkretnego aspektu.
 #### JavaFX
 - Biblioteka do pisania prostych natywnych GUI (nie webowych)
 - Wydana na licencji open-source
 - Logika opiera się na renderowaniu widoków i przypisywaniu przyciskom akcji
 
-#### Przechowywanie wyników testów na serwerze w formacie JSON-like. 
+#### 🛠️ Przechowywanie wyników testów na serwerze w formacie JSON-like. 
 ```json lines
 Test{
     id=0, 
@@ -100,7 +100,7 @@ Test{
     }
 ```
     
-## Krótka instrukcja obsługi.
+## ⚙️ Krótka instrukcja obsługi.
 1. Zainstalować zależności Maven
 2. Uruchomić `Server`
 3. Uruchomić `Client`
@@ -110,7 +110,7 @@ Test{
 7. Podejrzeć wyniki: `Show results`. 
 8. Wylogować użytkownika. 
 
-## Ograniczenia programu, np. maksymalna liczba obsługiwanych klientów.
+## 🛠️ Ograniczenia programu, np. maksymalna liczba obsługiwanych klientów.
 1. Podglądanie wyników jest możliwe jedynie dla tych testów, które zostały wykonane od czasu ostatniego restartu serwera. \
 Nie jest możliwe poznanie (z perspektywy użytkownika) wyników testów wykonanych wcześniej, mimo, że rezultaty zapisują się do pliku na serwerze. 
 2. System wyklucza możliwość zalogowania danego użytkownika z więcej niż jednej instancji aplikacji klienckiej. Oznacza to także, że niepoprawne 
