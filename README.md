@@ -120,10 +120,9 @@ Test{
 8. Wylogować użytkownika. 
 
 ## 🛠️ Ograniczenia programu, np. maksymalna liczba obsługiwanych klientów.
-1. Podglądanie wyników jest możliwe jedynie dla tych testów, które zostały wykonane od czasu ostatniego restartu serwera. \
-Nie jest możliwe poznanie (z perspektywy użytkownika) wyników testów wykonanych wcześniej, mimo, że rezultaty zapisują się do pliku na serwerze. 
-2. System wyklucza możliwość zalogowania danego użytkownika z więcej niż jednej instancji aplikacji klienckiej. Oznacza to także, że niepoprawne 
+1. System wyklucza możliwość zalogowania danego użytkownika z więcej niż jednej instancji aplikacji klienckiej. Oznacza to także, że niepoprawne 
 wylogowanie (np. przez zamknięcie okna z aktywnym testem) spowoduje brak możliwości ponownego zalogowania się.
-3. W ciągu dalszego rozwoju aplikacji należałoby:
+2. W ciągu dalszego rozwoju aplikacji należałoby:
 - Dodać logikę generowania losowości pytań
 - Wprowadzić obsługę limitu czasu na odpowiedź na pytanie po stronie klienta.
+

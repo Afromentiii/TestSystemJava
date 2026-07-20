@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Baza danych aplikacji (wyniki i użytkownicy) ###
+data/*.json

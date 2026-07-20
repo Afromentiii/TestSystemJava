@@ -15,6 +15,9 @@ public class User implements Serializable
     private boolean isLoggedIn;
     private List<Integer> testsID;
 
+    public User() {
+    }
+
     public User(String name, String password, String email, String firstName, String surname)
     {
         this.name = name;

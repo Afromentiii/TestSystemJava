@@ -10,6 +10,8 @@ public class Result implements Serializable {
     private int correctAnswerCount;
     private double correctnessPercentage;
 
+    public Result() {
+    }
 
     public Result(int testId, LocalDateTime sentAt, int questionCount, int correctAnswerCount, double correctnessPercentage) {
         this.testId = testId;
