@@ -15,6 +15,9 @@ public class Test implements Serializable
     private int testScore;
     private LocalDateTime date;
 
+    public Test() {
+    }
+
     public Test(List<Question> questions, int id)
     {
         this.questions = questions;

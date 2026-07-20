@@ -19,6 +19,9 @@ public class Question implements Serializable
     private String userAnswer;
     private int point;
 
+    public Question() {
+    }
+
     public Question(String question, String answerA, String answerB, String answerC, String correctAnswer)
     {
         this.question = question;
