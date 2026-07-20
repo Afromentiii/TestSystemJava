@@ -41,7 +41,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
         usersMap = new HashMap<String, User>();
         serverConsole = new Console();
         header = "[SERVER]";
-        questionsMainFilePath = "pytania.txt";
+        questionsMainFilePath = "data/pytania.txt";
         testID = 0;
         testsMap =  new HashMap<Integer, Test>();
     }
@@ -170,7 +170,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI
             test.setTestScore(totalPoints);
             LocalDateTime date = LocalDateTime.now();
             test.setDate(date);
-            saveStringToFile(test.toString(), "testy.txt");
+            saveStringToFile(test.toString(), "data/testy.txt");
             return totalPoints;
         }
         return notFound;
