@@ -85,7 +85,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI {
 
         public void saveUsers() {
             try {
-                mapper.writeValue(usersFile, usersMap);
+                mapper.writerWithDefaultPrettyPrinter().writeValue(usersFile, usersMap);
             } catch (Exception e) {
                 serverConsole.printLog(header, "Error saving users: " + e.getMessage());
             }
@@ -93,7 +93,7 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI {
 
         public void saveTests() {
             try {
-                mapper.writeValue(testsFile, testsMap);
+                mapper.writerWithDefaultPrettyPrinter().writeValue(testsFile, testsMap);
             } catch (Exception e) {
                 serverConsole.printLog(header, "Error saving tests: " + e.getMessage());
             }
@@ -127,7 +127,6 @@ public class Server extends UnicastRemoteObject implements InterfaceRMI {
     public User login(String username, String password) throws RemoteException {
         User foundUser = usersMap.get(username);
         if (foundUser != null && foundUser.getPassword().equals(password)) {
-            // Need synchronization on user object to avoid race condition on login flag
             synchronized (foundUser) {
                 if (!foundUser.getIsLoggedIn()) {
                     foundUser.setLoggedIn(true);

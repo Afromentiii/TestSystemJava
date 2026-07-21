@@ -82,33 +82,11 @@ Klasa `Client` reprezentuje logikę działania aplikacji klienckiej. Przechowuje
 - Wydana na licencji open-source
 - Logika opiera się na renderowaniu widoków i przypisywaniu przyciskom akcji
 
-#### 🛠️ Przechowywanie wyników testów na serwerze w formacie JSON-like. 
-```
-Test{
-    id=0, 
-    username=aaaa, 
-    questions=[
-        Question{
-            question='Jak nazywa się stolica Polski?', 
-            answerA='Warszawa', 
-            answerB='Kraków', 
-            answerC='Gdańsk', 
-            correctAnswer='Warszawa', 
-            userAnswer=Kraków, point=0
-        }, Question{
-            question='Ile wynosi pierwiastek kwadratowy z 64?', 
-            answerA='8', 
-            answerB='6', 
-            answerC='7', 
-            correctAnswer='8', 
-            userAnswer=6, 
-            point=0
-            }{...} 
-            testEnabled=true, 
-            testScore=0
-    }
-```
-    
+#### 🛠️ Przechowywanie danych i wyników testów na serwerze (Persystencja)
+Aplikacja wykorzystuje bibliotekę Jackson do zapisywania bazy użytkowników oraz rozwiązanych testów do dedykowanych plików `data/users.json` oraz `data/tests.json`. Dzięki temu:
+- Serwer "pamięta" konta po ponownym uruchomieniu.
+- Pliki zapisywane są w sformatowanym, łatwym do odczytu przez człowieka formacie (pretty-print JSON).
+- Dla kompatybilności wstecznej serwer dopisuje też skrócone logi testów do `data/testy.txt`.
 ## ⚙️ Krótka instrukcja obsługi.
 1. Zainstalować zależności Maven
 2. Uruchomić `Server`
