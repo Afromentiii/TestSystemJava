@@ -8,6 +8,13 @@ Wspólnie: ustalenie API, przygotowanie i implementacja modułu `TestService`, p
 ## 📖 Krótki opis celu programu.
 Celem projektu jest przygotowanie rozwiązania umożliwiającego zdalne przeprowadzanie zamkniętych testów jednokrotnego wyboru, a także podgląd wyników użytkowników i przechowywanie odpowiedzi. 
 
+## 🖼️ Prezentacja działania aplikacji
+Poniżej znajduje się krótka animacja przedstawiająca przebieg rozwiązywania testu, a także statyczny rzut na tabelę z ostatecznymi wynikami.
+
+![Prezentacja działania - GIF](assets/0722.gif)
+
+![Podgląd wyników testu](assets/wyniki_testow.png)
+
 ## 📖 Opis i schemat struktury logicznej aplikacji.
 ![Opis alternatywny](assets/sekwencje_logika_testu.png)
 Przeprowadzenie testu polega na tym, że:
