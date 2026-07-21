@@ -8,6 +8,13 @@ Wspólnie: ustalenie API, przygotowanie i implementacja modułu `TestService`, p
 ## 📖 Krótki opis celu programu.
 Celem projektu jest przygotowanie rozwiązania umożliwiającego zdalne przeprowadzanie zamkniętych testów jednokrotnego wyboru, a także podgląd wyników użytkowników i przechowywanie odpowiedzi. 
 
+## 🖼️ Prezentacja działania aplikacji
+Poniżej znajduje się krótka animacja przedstawiająca przebieg rozwiązywania testu, a także statyczny rzut na tabelę z ostatecznymi wynikami.
+
+![Prezentacja działania - GIF](assets/0722.gif)
+
+![Podgląd wyników testu](assets/wyniki_testow.png)
+
 ## 📖 Opis i schemat struktury logicznej aplikacji.
 ![Opis alternatywny](assets/sekwencje_logika_testu.png)
 Przeprowadzenie testu polega na tym, że:
@@ -101,7 +108,6 @@ Aplikacja wykorzystuje bibliotekę Jackson do zapisywania bazy użytkowników or
 1. System wyklucza możliwość zalogowania danego użytkownika z więcej niż jednej instancji aplikacji klienckiej. Oznacza to także, że niepoprawne 
 wylogowanie (np. przez zamknięcie okna z aktywnym testem) spowoduje brak możliwości ponownego zalogowania się.
 2. W ciągu dalszego rozwoju aplikacji należałoby:
+- Dodać logikę generowania losowości pytań
 - Wprowadzić obsługę limitu czasu na odpowiedź na pytanie po stronie klienta.
-- Wdrożyć szyfrowanie haseł w bazie danych (obecnie przechowywane są one jawnym tekstem).
-- Dodać mechanizm wznawiania przerwanego testu w przypadku nagłej utraty połączenia sieciowego z serwerem.
-- Zaprojektować panel administratora umożliwiający zarządzanie bazą pytań z poziomu GUI (bez konieczności edytowania plików tekstowych).
+
