@@ -11,9 +11,13 @@ Celem projektu jest przygotowanie rozwiązania umożliwiającego zdalne przeprow
 ## 🖼️ Prezentacja działania aplikacji
 Poniżej znajduje się krótka animacja przedstawiająca przebieg rozwiązywania testu, a także statyczny rzut na tabelę z ostatecznymi wynikami.
 
-![Prezentacja działania - GIF](assets/0722.gif)
+<p align="center">
+  <img src="assets/0722.gif" alt="Prezentacja działania - GIF" width="75%">
+</p>
 
-![Podgląd wyników testu](assets/wyniki_testow.png)
+<p align="center">
+  <img src="assets/wyniki_testow.png" alt="Podgląd wyników testu" width="50%">
+</p>
 
 ## 📖 Opis i schemat struktury logicznej aplikacji.
 ![Opis alternatywny](assets/sekwencje_logika_testu.png)
