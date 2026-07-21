@@ -101,6 +101,7 @@ Aplikacja wykorzystuje bibliotekę Jackson do zapisywania bazy użytkowników or
 1. System wyklucza możliwość zalogowania danego użytkownika z więcej niż jednej instancji aplikacji klienckiej. Oznacza to także, że niepoprawne 
 wylogowanie (np. przez zamknięcie okna z aktywnym testem) spowoduje brak możliwości ponownego zalogowania się.
 2. W ciągu dalszego rozwoju aplikacji należałoby:
-- Dodać logikę generowania losowości pytań
 - Wprowadzić obsługę limitu czasu na odpowiedź na pytanie po stronie klienta.
-
+- Wdrożyć szyfrowanie haseł w bazie danych (obecnie przechowywane są one jawnym tekstem).
+- Dodać mechanizm wznawiania przerwanego testu w przypadku nagłej utraty połączenia sieciowego z serwerem.
+- Zaprojektować panel administratora umożliwiający zarządzanie bazą pytań z poziomu GUI (bez konieczności edytowania plików tekstowych).
